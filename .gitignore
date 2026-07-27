@@ -1,0 +1,26 @@
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# User uploads (keep folder structure)
+uploads/*
+!uploads/.gitkeep
+
+# Logs / cache
+application/logs/*
+!application/logs/index.html
+application/cache/*
+!application/cache/index.html
+!application/cache/.htaccess
+
+# Temp
+*.log
+*.tmp
