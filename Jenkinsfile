@@ -34,7 +34,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 echo "Running SonarQube analysis..."
-                // Add sonar-scanner here later
+                // We will replace this with the real sonar-scanner later.
             }
         }
 
@@ -65,7 +65,7 @@ pipeline {
 
                 withCredentials([
                     usernamePassword(
-                        credentialsId: 'nexus-credentials',
+                        credentialsId: 'nexus-creds',
                         usernameVariable: 'NEXUS_USER',
                         passwordVariable: 'NEXUS_PASS'
                     )
@@ -73,7 +73,7 @@ pipeline {
 
                     sh """
                     curl --fail --show-error --silent \
-                      -u ${NEXUS_USER}:${NEXUS_PASS} \
+                      -u \$NEXUS_USER:\$NEXUS_PASS \
                       --upload-file multi-hospital.tar.gz \
                       ${NEXUS_URL}/repository/${NEXUS_REPOSITORY}/multi-hospital-${BUILD_NUMBER}.tar.gz
                     """
@@ -84,6 +84,7 @@ pipeline {
     }
 
     post {
+
         success {
             archiveArtifacts artifacts: 'multi-hospital.tar.gz', fingerprint: true
             echo "Pipeline completed successfully."
@@ -91,6 +92,10 @@ pipeline {
 
         failure {
             echo "Pipeline failed."
+        }
+
+        always {
+            cleanWs()
         }
     }
 }
