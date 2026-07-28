@@ -9,22 +9,30 @@ pipeline {
             }
         }
 
-        stage('PHP') {
+        stage('Environment Check') {
             steps {
+                sh 'pwd'
                 sh 'php -v'
-            }
-        }
-
-        stage('Composer') {
-            steps {
                 sh 'composer --version'
+                sh 'git --version'
+                sh 'docker --version'
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Composer Install') {
             steps {
                 sh 'composer install --no-interaction'
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Environment is ready!'
+        }
+
+        failure {
+            echo 'Pipeline failed.'
         }
     }
 }
