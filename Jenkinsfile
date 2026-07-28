@@ -13,8 +13,8 @@ pipeline {
             steps {
                 sh '''
                 docker run --rm \
-                  -v $WORKSPACE:/app \
-                  -w /app \
+                  -v devops_jenkins_data:/var/jenkins_home \
+                  -w /var/jenkins_home/workspace/multi-hospital-pipeline \
                   devops-php74-composer \
                   composer install
                 '''
@@ -37,6 +37,16 @@ pipeline {
             steps {
                 echo 'Next step'
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully.'
+        }
+
+        failure {
+            echo 'Pipeline failed.'
         }
     }
 }
