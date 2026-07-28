@@ -9,30 +9,34 @@ pipeline {
             }
         }
 
-        stage('Environment Check') {
-            steps {
-                sh 'pwd'
-                sh 'php -v'
-                sh 'composer --version'
-                sh 'git --version'
-                sh 'docker --version'
-            }
-        }
-
         stage('Composer Install') {
             steps {
-                sh 'composer install --no-interaction'
+                sh '''
+                docker run --rm \
+                  -v $WORKSPACE:/app \
+                  -w /app \
+                  devops-php74-composer \
+                  composer install
+                '''
             }
         }
-    }
 
-    post {
-        success {
-            echo 'Environment is ready!'
+        stage('SonarQube Analysis') {
+            steps {
+                echo 'Next step'
+            }
         }
 
-        failure {
-            echo 'Pipeline failed.'
+        stage('Package') {
+            steps {
+                echo 'Next step'
+            }
+        }
+
+        stage('Upload to Nexus') {
+            steps {
+                echo 'Next step'
+            }
         }
     }
 }
