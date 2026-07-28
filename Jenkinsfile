@@ -9,10 +9,21 @@ pipeline {
             }
         }
 
-        stage('Docker Test') {
+        stage('PHP') {
             steps {
-                sh 'docker version'
-                sh 'docker ps'
+                sh 'php -v'
+            }
+        }
+
+        stage('Composer') {
+            steps {
+                sh 'composer --version'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'composer install --no-interaction'
             }
         }
     }
