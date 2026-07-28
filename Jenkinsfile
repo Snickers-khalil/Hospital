@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        sonarQube 'SonarScanner'
-    }
-
     environment {
         JENKINS_VOLUME   = "devops_jenkins_data"
         WORKSPACE_PATH   = "/var/jenkins_home/workspace/multi-hospital-pipeline"
@@ -39,9 +35,13 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh """
-                        ${tool('SonarScanner')}/bin/sonar-scanner
-                    """
+                    script {
+                        def scannerHome = tool 'SonarScanner'
+
+                        sh """
+                            ${scannerHome}/bin/sonar-scanner
+                        """
+                    }
                 }
             }
         }
