@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        WORKSPACE_DIR = "/var/jenkins_home/workspace/multi-hospital-pipeline"
+    }
+
     stages {
 
         stage('Checkout') {
@@ -14,39 +18,81 @@ pipeline {
                 sh '''
                 docker run --rm \
                   -v devops_jenkins_data:/var/jenkins_home \
-                  -w /var/jenkins_home/workspace/multi-hospital-pipeline \
+                  -w $WORKSPACE_DIR \
                   devops-php74-composer \
-                  composer install
+                  sh -c "
+                    git config --global --add safe.directory $WORKSPACE_DIR &&
+                    composer install --no-interaction --prefer-dist
+                  "
                 '''
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
-                echo 'Next step'
+                echo "Running SonarQube analysis..."
+
+                // Uncomment after Sonar Scanner is installed
+                /*
+                withSonarQubeEnv('SonarQube') {
+                    sh '''
+                    sonar-scanner
+                    '''
+                }
+                */
             }
         }
 
         stage('Package') {
             steps {
-                echo 'Next step'
+                echo "Packaging application..."
+
+                sh '''
+                tar -czf multi-hospital.tar.gz \
+                    application \
+                    system \
+                    vendor \
+                    adminlte \
+                    common \
+                    front \
+                    front-end \
+                    hmz \
+                    new-fnt \
+                    index.php \
+                    composer.json \
+                    composer.lock
+                '''
             }
         }
 
         stage('Upload to Nexus') {
             steps {
-                echo 'Next step'
+                echo "Uploading artifact to Nexus..."
+
+                // Replace after Nexus is configured
+                /*
+                sh '''
+                curl -u admin:password \
+                  --upload-file multi-hospital.tar.gz \
+                  http://nexus:8081/repository/multi-hospital/multi-hospital.tar.gz
+                '''
+                */
             }
         }
     }
 
     post {
+
         success {
-            echo 'Pipeline completed successfully.'
+            echo "Pipeline completed successfully."
         }
 
         failure {
-            echo 'Pipeline failed.'
+            echo "Pipeline failed."
+        }
+
+        always {
+            archiveArtifacts artifacts: '*.tar.gz', fingerprint: true
         }
     }
 }
