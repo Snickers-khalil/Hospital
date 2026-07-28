@@ -4,6 +4,7 @@ pipeline {
     environment {
         JENKINS_VOLUME   = "devops_jenkins_data"
         WORKSPACE_PATH   = "/var/jenkins_home/workspace/multi-hospital-pipeline"
+
         NEXUS_URL        = "http://10.10.10.8:8081"
         NEXUS_REPOSITORY = "multi-hospital-releases"
     }
@@ -34,7 +35,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 echo "Running SonarQube analysis..."
-                // Real SonarQube scan will be added later.
+                // We will configure the real SonarQube scanner later.
             }
         }
 
@@ -57,6 +58,8 @@ pipeline {
                     composer.json \
                     composer.lock
                 '''
+
+                archiveArtifacts artifacts: 'multi-hospital.tar.gz', fingerprint: true
             }
         }
 
@@ -86,7 +89,6 @@ pipeline {
     post {
 
         success {
-            archiveArtifacts artifacts: 'multi-hospital.tar.gz', fingerprint: true
             echo "Pipeline completed successfully."
         }
 
@@ -94,8 +96,8 @@ pipeline {
             echo "Pipeline failed."
         }
 
-        always {
-            cleanWs(deleteDirs: true, disableDeferredWipeout: true)
+        cleanup {
+            cleanWs()
         }
     }
 }
