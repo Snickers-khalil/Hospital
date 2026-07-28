@@ -2,7 +2,10 @@ pipeline {
     agent any
 
     environment {
-        WORKSPACE_DIR = "/var/jenkins_home/workspace/multi-hospital-pipeline"
+        JENKINS_VOLUME = "devops_jenkins_data"
+        WORKSPACE_PATH = "/var/jenkins_home/workspace/multi-hospital-pipeline"
+        NEXUS_URL = "http://10.10.10.8:8081"
+        NEXUS_REPOSITORY = "multi-hospital-releases"
     }
 
     stages {
@@ -15,31 +18,23 @@ pipeline {
 
         stage('Composer Install') {
             steps {
-                sh '''
+                sh """
                 docker run --rm \
-                  -v devops_jenkins_data:/var/jenkins_home \
-                  -w $WORKSPACE_DIR \
+                  -v ${JENKINS_VOLUME}:/var/jenkins_home \
+                  -w ${WORKSPACE_PATH} \
                   devops-php74-composer \
-                  sh -c "
-                    git config --global --add safe.directory $WORKSPACE_DIR &&
+                  sh -c '
+                    git config --global --add safe.directory ${WORKSPACE_PATH}
                     composer install --no-interaction --prefer-dist
-                  "
-                '''
+                  '
+                """
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
                 echo "Running SonarQube analysis..."
-
-                // Uncomment after Sonar Scanner is installed
-                /*
-                withSonarQubeEnv('SonarQube') {
-                    sh '''
-                    sonar-scanner
-                    '''
-                }
-                */
+                // Add sonar-scanner here later
             }
         }
 
@@ -67,32 +62,35 @@ pipeline {
 
         stage('Upload to Nexus') {
             steps {
-                echo "Uploading artifact to Nexus..."
 
-                // Replace after Nexus is configured
-                /*
-                sh '''
-                curl -u admin:password \
-                  --upload-file multi-hospital.tar.gz \
-                  http://nexus:8081/repository/multi-hospital/multi-hospital.tar.gz
-                '''
-                */
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'nexus-credentials',
+                        usernameVariable: 'NEXUS_USER',
+                        passwordVariable: 'NEXUS_PASS'
+                    )
+                ]) {
+
+                    sh """
+                    curl --fail --show-error --silent \
+                      -u ${NEXUS_USER}:${NEXUS_PASS} \
+                      --upload-file multi-hospital.tar.gz \
+                      ${NEXUS_URL}/repository/${NEXUS_REPOSITORY}/multi-hospital-${BUILD_NUMBER}.tar.gz
+                    """
+
+                }
             }
         }
     }
 
     post {
-
         success {
+            archiveArtifacts artifacts: 'multi-hospital.tar.gz', fingerprint: true
             echo "Pipeline completed successfully."
         }
 
         failure {
             echo "Pipeline failed."
-        }
-
-        always {
-            archiveArtifacts artifacts: '*.tar.gz', fingerprint: true
         }
     }
 }
