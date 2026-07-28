@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        JENKINS_VOLUME = "devops_jenkins_data"
-        WORKSPACE_PATH = "/var/jenkins_home/workspace/multi-hospital-pipeline"
-        NEXUS_URL = "http://10.10.10.8:8081"
+        JENKINS_VOLUME   = "devops_jenkins_data"
+        WORKSPACE_PATH   = "/var/jenkins_home/workspace/multi-hospital-pipeline"
+        NEXUS_URL        = "http://10.10.10.8:8081"
         NEXUS_REPOSITORY = "multi-hospital-releases"
     }
 
@@ -34,7 +34,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 echo "Running SonarQube analysis..."
-                // We will replace this with the real sonar-scanner later.
+                // Real SonarQube scan will be added later.
             }
         }
 
@@ -62,7 +62,6 @@ pipeline {
 
         stage('Upload to Nexus') {
             steps {
-
                 withCredentials([
                     usernamePassword(
                         credentialsId: 'nexus-creds',
@@ -78,6 +77,7 @@ pipeline {
                       ${NEXUS_URL}/repository/${NEXUS_REPOSITORY}/multi-hospital-${BUILD_NUMBER}.tar.gz
                     """
 
+                    echo "Artifact uploaded successfully to Nexus."
                 }
             }
         }
@@ -95,7 +95,7 @@ pipeline {
         }
 
         always {
-            cleanWs()
+            cleanWs(deleteDirs: true, disableDeferredWipeout: true)
         }
     }
 }
