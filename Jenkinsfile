@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        sonarQube 'SonarScanner'
+    }
+
     environment {
         JENKINS_VOLUME   = "devops_jenkins_data"
         WORKSPACE_PATH   = "/var/jenkins_home/workspace/multi-hospital-pipeline"
@@ -34,13 +38,25 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                echo "Running SonarQube analysis..."
-                // We will configure the real SonarQube scanner later.
+                withSonarQubeEnv('SonarQube') {
+                    sh """
+                        ${tool('SonarScanner')}/bin/sonar-scanner
+                    """
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
             }
         }
 
         stage('Package') {
             steps {
+
                 echo "Packaging application..."
 
                 sh '''
@@ -65,6 +81,7 @@ pipeline {
 
         stage('Upload to Nexus') {
             steps {
+
                 withCredentials([
                     usernamePassword(
                         credentialsId: 'nexus-creds',
