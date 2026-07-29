@@ -101,6 +101,50 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy') {
+            steps {
+
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'nexus-creds',
+                        usernameVariable: 'NEXUS_USER',
+                        passwordVariable: 'NEXUS_PASS'
+                    )
+                ]) {
+
+                    sshagent(credentials: ['deploy-key']) {
+
+                        sh '''
+                        ssh -o StrictHostKeyChecking=no root@10.10.10.8 << EOF
+
+                        set -e
+
+                        RELEASE_DIR=/var/www/multi-hospital/releases/'"${BUILD_NUMBER}"'
+
+                        mkdir -p $RELEASE_DIR
+
+                        curl --fail --silent \
+                          -u '"$NEXUS_USER":"$NEXUS_PASS"' \
+                          -o /tmp/multi-hospital.tar.gz \
+                          http://10.10.10.8:8081/repository/multi-hospital-releases/multi-hospital-'"${BUILD_NUMBER}"'.tar.gz
+
+                        tar -xzf /tmp/multi-hospital.tar.gz -C $RELEASE_DIR
+
+                        ln -sfn $RELEASE_DIR /var/www/multi-hospital/current
+
+                        chown -R www-data:www-data /var/www/multi-hospital
+
+                        systemctl reload apache2
+
+                        rm -f /tmp/multi-hospital.tar.gz
+
+                        EOF
+                        '''
+                    }
+                }
+            }
+        }
     }
 
     post {
