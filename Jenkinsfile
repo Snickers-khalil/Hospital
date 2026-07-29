@@ -115,32 +115,46 @@ pipeline {
 
                     sshagent(credentials: ['deploy-key']) {
 
-                        sh '''
-                        ssh -o StrictHostKeyChecking=no root@10.10.10.8 << EOF
-
+                        sh """
                         set -e
 
-                        RELEASE_DIR=/var/www/multi-hospital/releases/'"${BUILD_NUMBER}"'
+                        echo "Downloading artifact from Nexus..."
 
-                        mkdir -p $RELEASE_DIR
+                        curl --fail --show-error --silent \
+                          -u \$NEXUS_USER:\$NEXUS_PASS \
+                          -o multi-hospital.tar.gz \
+                          ${NEXUS_URL}/repository/${NEXUS_REPOSITORY}/multi-hospital-${BUILD_NUMBER}.tar.gz
 
-                        curl --fail --silent \
-                          -u '"$NEXUS_USER":"$NEXUS_PASS"' \
-                          -o /tmp/multi-hospital.tar.gz \
-                          http://10.10.10.8:8081/repository/multi-hospital-releases/multi-hospital-'"${BUILD_NUMBER}"'.tar.gz
+                        echo "Copying artifact to deployment server..."
 
-                        tar -xzf /tmp/multi-hospital.tar.gz -C $RELEASE_DIR
+                        scp -o StrictHostKeyChecking=no \
+                          multi-hospital.tar.gz \
+                          root@10.10.10.8:/tmp/
 
-                        ln -sfn $RELEASE_DIR /var/www/multi-hospital/current
+                        echo "Deploying..."
 
-                        chown -R www-data:www-data /var/www/multi-hospital
+                        ssh -o StrictHostKeyChecking=no root@10.10.10.8 "
 
-                        systemctl reload apache2
+                            set -e
 
-                        rm -f /tmp/multi-hospital.tar.gz
+                            RELEASE_DIR=/var/www/multi-hospital/releases/${BUILD_NUMBER}
 
-                        EOF
-                        '''
+                            mkdir -p \\\$RELEASE_DIR
+
+                            tar -xzf /tmp/multi-hospital.tar.gz -C \\\$RELEASE_DIR
+
+                            ln -sfn \\\$RELEASE_DIR /var/www/multi-hospital/current
+
+                            chown -R www-data:www-data /var/www/multi-hospital
+
+                            systemctl reload apache2
+
+                            rm -f /tmp/multi-hospital.tar.gz
+
+                            echo Deployment completed.
+
+                        "
+                        """
                     }
                 }
             }
