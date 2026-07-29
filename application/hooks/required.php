@@ -150,11 +150,18 @@ function required()
         }
 
     if (!$CI->ion_auth->in_group(array('superadmin'))) {
-        $CI->db->where('hospital_id', $CI->hospital_id);
-        $CI->timezone = $CI->db->get('settings')->row()->timezone;
+        $hospital_id = isset($CI->hospital_id) ? $CI->hospital_id : $CI->session->userdata('hospital_id');
+        if (!empty($hospital_id)) {
+            $CI->db->where('hospital_id', $hospital_id);
+            $settings_row = $CI->db->get('settings')->row();
+            $CI->timezone = !empty($settings_row) ? $settings_row->timezone : 'UTC';
+        } else {
+            $CI->timezone = 'UTC';
+        }
     } else {
         $CI->db->where('hospital_id', 'superadmin');
-        $CI->timezone = $CI->db->get('settings')->row()->timezone;
+        $settings_row = $CI->db->get('settings')->row();
+        $CI->timezone = !empty($settings_row) ? $settings_row->timezone : 'UTC';
     }
     $timezone = $CI->timezone;
     if (!empty($timezone)) {

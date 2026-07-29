@@ -13,14 +13,14 @@ $title = explode(' ', $settings->title);
   <link rel="icon" href="uploads/favicon10.png" type="image/x-icon" />
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="<?php echo $settings->description; ?>" />
+    <meta name="description" content="<?php echo isset($settings->description) ? $settings->description : ''; ?>" />
     <meta name="keywords" content="software development, HMS software, hospital management system, custom software development" />
     <meta name="author" content="<?php echo $settings->title; ?>">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="<?php echo $settings->title; ?>" />
-    <meta property="og:description" content="<?php echo $settings->description; ?>" />
+    <meta property="og:description" content="<?php echo isset($settings->description) ? $settings->description : ''; ?>" />
     <meta property="og:type" content="website">
     <meta property="og:url" content="<?php echo base_url(); ?>">
     <meta property="og:site_name" content="<?php echo $settings->title; ?>">
