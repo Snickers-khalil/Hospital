@@ -513,7 +513,7 @@ class Doctor extends MX_Controller
             );
         } else {
             $output = array(
-                // "draw" => 1,
+                "draw" => intval($requestData['draw']),
                 "recordsTotal" => 0,
                 "recordsFiltered" => 0,
                 "data" => []
