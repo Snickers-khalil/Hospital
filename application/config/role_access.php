@@ -25,6 +25,19 @@ $config['hidden_modules'] = array('pharmacist', 'pharmacy', 'donor', 'ambulance'
 // Refused for AJAX calls too, not only for pages.
 $config['strict_classes'] = array('ai_patient_overview', 'ai_image_analysis', 'treatment_plan');
 
+// Sidebar sections, in display order. A top-level item joins the section of its first link.
+$config['menu_groups'] = array(
+    'menu_group_main' => array('home', 'emergency'),
+    'menu_group_hospitals' => array('hospital', 'request', 'systems'),
+    'menu_group_organisation' => array('department', 'doctor', 'nurse', 'schedule'),
+    'menu_group_patients' => array('patient', 'appointment', 'prescription'),
+    'menu_group_clinical' => array('lab', 'bed', 'medicine', 'report'),
+    'menu_group_ai' => array('ai_patient_overview', 'ai_image_analysis', 'treatment_plan'),
+    'menu_group_finance' => array('finance', 'insurance'),
+    'menu_group_administration' => array('notice', 'email', 'sms', 'chat', 'site', 'frontend', 'slide', 'service', 'faq', 'settings', 'import', 'logs', 'transactionlogs', 'file'),
+    'menu_group_account' => array('profile', 'auth'),
+);
+
 $clinical_pages = array('patient', 'symptom', 'diagnosis', 'treatment', 'advice');
 $clinical_menu = array('patient', 'patient/caseList', 'symptom', 'diagnosis', 'treatment', 'advice', 'patient/documents');
 $report_menu = array('report/birth', 'report/operation', 'report/expire');

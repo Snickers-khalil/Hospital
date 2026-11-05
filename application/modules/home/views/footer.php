@@ -371,12 +371,10 @@ if ($this->session->flashdata('success') || $this->session->flashdata('error') |
             if ($(this).is(':checked')) {
                 $('body').toggleClass('dark-mode');
                 $('.main-header').toggleClass('navbar-dark navbar-light');
-                $('.main-sidebar').toggleClass('sidebar-dark-primary sidebar-light-primary');
                 $('.custom-control-label i').toggleClass('fa-moon fa-sun');
             } else {
                 $('body').toggleClass('dark-mode');
                 $('.main-header').toggleClass('navbar-dark navbar-light');
-                $('.main-sidebar').toggleClass('sidebar-dark-primary sidebar-light-primary');
                 $('.custom-control-label i').toggleClass('fa-moon fa-sun');
             }
             drawChartTopServices();

@@ -10,8 +10,22 @@
   --mc-muted: #7b8794;
   --mc-hover: #f0f7ff;
   --mc-primary: #1f6fb2;
+  --mc-surface: #ffffff;
   --mc-chip-bg: #e8f1fa;
   --mc-chip-muted-bg: #f1f3f5;
+}
+
+body.dark-mode {
+  --mc-border: #333f4c;
+  --mc-header-bg: #2a333d;
+  --mc-header-text: #b8c2cc;
+  --mc-text: #e4e7eb;
+  --mc-muted: #9aa5b1;
+  --mc-hover: #2f3b47;
+  --mc-chip-bg: #24405a;
+  --mc-chip-text: #9fcdf3;
+  --mc-chip-muted-bg: #2f3943;
+  --mc-surface: #232b34;
 }
 
 /* Table */
@@ -22,7 +36,7 @@
   border-radius: 8px;
   box-shadow: none;
   overflow: hidden;
-  background: #fff;
+  background: var(--mc-surface);
   color: var(--mc-text);
   font-size: 14px;
   margin-top: 12px !important;
@@ -59,12 +73,16 @@
 }
 
 .content-wrapper table.table:is(.dataTable, .datatables, #editable-sample) > tbody > tr:nth-child(n) {
-  background: #fff;
+  background: var(--mc-surface) !important;
   transition: background-color 0.12s ease;
 }
 
 .content-wrapper table.table:is(.dataTable, .datatables, #editable-sample) > tbody > tr:hover {
-  background: var(--mc-hover);
+  background: var(--mc-hover) !important;
+}
+
+.content-wrapper table.table:is(.dataTable, .datatables, #editable-sample) > tbody > tr > * {
+  box-shadow: none !important;
 }
 
 /* Sort arrows stay discreet until the column is active */
@@ -108,7 +126,7 @@
 
 .content-wrapper div.dataTables_wrapper .dt-buttons .btn,
 .content-wrapper div.dataTables_wrapper .dt-buttons.btn-group > .btn {
-  background: #fff !important;
+  background: var(--mc-surface) !important;
   border: 1px solid var(--mc-border) !important;
   border-radius: 6px !important;
   color: var(--mc-header-text) !important;
@@ -156,7 +174,7 @@
 }
 
 /* Space for the expand control of responsive tables */
-.content-wrapper table.table:is(.dataTable, .datatables, #editable-sample) > tbody > tr > td.dtr-control {
+.content-wrapper table.table.collapsed:is(.dataTable, .datatables, #editable-sample) > tbody > tr > td.dtr-control {
   padding-inline-start: 38px;
 }
 
@@ -183,7 +201,7 @@
 .mc-chip {
   background: var(--mc-chip-bg);
   border-radius: 4px;
-  color: #1a5a91;
+  color: var(--mc-chip-text, #1a5a91);
   font-size: 12px;
   line-height: 1.4;
   padding: 2px 7px;

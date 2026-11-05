@@ -1,0 +1,199 @@
+/* MediCore sidebar: light design with grouped links and a menu search. */
+.main-sidebar.mc-sidebar {
+  --mc-side-bg: #ffffff;
+  --mc-side-border: #e5e9f0;
+  --mc-side-text: #3e4c59;
+  --mc-side-muted: #8592a0;
+  --mc-side-hover: #f3f6f9;
+  --mc-side-active-bg: #e8f1fa;
+  --mc-side-active-text: #1a5a91;
+  --mc-side-input: #f5f7fa;
+
+  background: var(--mc-side-bg) !important;
+  border-inline-end: 1px solid var(--mc-side-border);
+  box-shadow: none !important;
+  color: var(--mc-side-text) !important;
+}
+
+body.dark-mode .main-sidebar.mc-sidebar {
+  --mc-side-bg: #1b222b;
+  --mc-side-border: #2c3642;
+  --mc-side-text: #cbd2d9;
+  --mc-side-muted: #7b8794;
+  --mc-side-hover: #27313c;
+  --mc-side-active-bg: #1f3a52;
+  --mc-side-active-text: #9fcdf3;
+  --mc-side-input: #27313c;
+}
+
+/* Brand */
+.main-sidebar.mc-sidebar .brand-link {
+  background: var(--mc-side-bg) !important;
+  border-bottom: 1px solid var(--mc-side-border) !important;
+  color: var(--mc-side-text) !important;
+  padding-block: 12px;
+}
+
+.main-sidebar.mc-sidebar .brand-text {
+  color: var(--mc-side-text) !important;
+  font-size: 16px;
+  font-weight: 700 !important;
+  letter-spacing: 0;
+  text-transform: none !important;
+}
+
+.main-sidebar.mc-sidebar .brand-image {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* The scrolling area */
+.main-sidebar.mc-sidebar .sidebar {
+  background: transparent;
+  height: calc(100vh - 53px);
+  margin-top: 0;
+  overflow-y: auto;
+  padding: 12px 10px 24px;
+  scrollbar-width: thin;
+}
+
+/* Search */
+.mc-menu-search {
+  position: relative;
+  margin-bottom: 6px;
+}
+
+.mc-menu-search i {
+  color: var(--mc-side-muted);
+  font-size: 13px;
+  inset-inline-start: 11px;
+  pointer-events: none;
+  position: absolute;
+  top: 11px;
+}
+
+.main-sidebar.mc-sidebar .mc-menu-search input {
+  background: var(--mc-side-input);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--mc-side-text);
+  font-size: 13.5px;
+  height: 36px;
+  outline: none;
+  padding-block: 0;
+  padding-inline: 32px 10px;
+  width: 100%;
+}
+
+.main-sidebar.mc-sidebar .mc-menu-search input::placeholder {
+  color: var(--mc-side-muted);
+}
+
+.main-sidebar.mc-sidebar .mc-menu-search input:focus {
+  background: var(--mc-side-bg);
+  border-color: #1f6fb2;
+  box-shadow: 0 0 0 3px rgba(31, 111, 178, 0.14);
+}
+
+.mc-menu-empty {
+  color: var(--mc-side-muted);
+  font-size: 13px;
+  padding: 12px 10px;
+}
+
+/* Group titles */
+.main-sidebar.mc-sidebar .nav-sidebar > .nav-header {
+  background: transparent;
+  color: var(--mc-side-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  margin-top: 14px !important;
+  opacity: 1;
+  padding: 4px 10px;
+  text-transform: uppercase;
+}
+
+/* Links */
+.main-sidebar.mc-sidebar .nav-sidebar .nav-item {
+  margin-bottom: 2px;
+  margin-top: 0 !important;
+}
+
+.main-sidebar.mc-sidebar .nav-sidebar .nav-item > .nav-link {
+  background: transparent !important;
+  border-radius: 8px;
+  color: var(--mc-side-text) !important;
+  margin: 0;
+  padding: 8px 10px !important;
+  transform: none;
+  transition: background-color 0.12s ease, color 0.12s ease;
+  width: 100%;
+}
+
+.main-sidebar.mc-sidebar .sidebar .nav-link p {
+  font-size: 14px !important;
+  font-weight: 500;
+  line-height: 1.35 !important;
+  opacity: 1;
+}
+
+.main-sidebar.mc-sidebar .nav-link .nav-icon {
+  color: var(--mc-side-muted) !important;
+  font-size: 15px;
+  margin-inline-end: 6px;
+  width: 22px;
+}
+
+.main-sidebar.mc-sidebar .nav-sidebar .nav-item > .nav-link:hover {
+  background: var(--mc-side-hover) !important;
+}
+
+/* Current page and its open section */
+.main-sidebar.mc-sidebar .nav-sidebar .nav-item > .nav-link.active {
+  background: var(--mc-side-active-bg) !important;
+  color: var(--mc-side-active-text) !important;
+  box-shadow: none !important;
+}
+
+.main-sidebar.mc-sidebar .nav-sidebar .nav-item > .nav-link.active p,
+.main-sidebar.mc-sidebar .nav-sidebar .nav-item > .nav-link.active .nav-icon {
+  color: var(--mc-side-active-text) !important;
+  font-weight: 600;
+}
+
+/* Submenus: a guide line replaces the circle icons */
+.main-sidebar.mc-sidebar .nav-treeview {
+  border-inline-start: 1px solid var(--mc-side-border);
+  margin-block: 2px 6px;
+  margin-inline-start: 20px;
+  padding-inline-start: 8px;
+}
+
+.main-sidebar.mc-sidebar .nav-treeview .nav-icon.fa-circle {
+  display: none;
+}
+
+.main-sidebar.mc-sidebar .nav-treeview .nav-link {
+  padding: 6px 9px !important;
+}
+
+.main-sidebar.mc-sidebar .sidebar .nav-treeview .nav-link p {
+  font-size: 13.5px !important;
+  font-weight: 400;
+  margin-inline-start: 0;
+}
+
+/* Collapsed sidebar keeps only the icons until it is hovered */
+.sidebar-collapse .main-sidebar.mc-sidebar:not(:hover) .mc-menu-search,
+.sidebar-collapse .main-sidebar.mc-sidebar:not(:hover) .nav-header {
+  display: none;
+}
+
+.sidebar-collapse .main-sidebar.mc-sidebar:not(:hover) .sidebar {
+  padding-inline: 8px;
+}
+
+.sidebar-collapse .main-sidebar.mc-sidebar:not(:hover) .nav-treeview {
+  display: none !important;
+}

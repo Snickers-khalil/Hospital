@@ -121,11 +121,53 @@ function role_menu_filter($html)
         }
     } while ($removed);
 
+    role_menu_group($doc, $xpath);
+
     $output = '';
     foreach ($xpath->query('//div[@id="role-menu"]')->item(0)->childNodes as $node) {
         $output .= $doc->saveHTML($node);
     }
     return $output;
+}
+
+// Sorts top-level menu items into titled sections.
+function role_menu_group($doc, $xpath)
+{
+    $root = $xpath->query('//div[@id="role-menu"]')->item(0);
+    $groups = role_access_config('menu_groups');
+    $sections = array_fill_keys(array_keys($groups), array());
+
+    foreach (iterator_to_array($xpath->query('./li', $root)) as $item) {
+        $link = $xpath->query('.//a[@href!="#"]', $item)->item(0);
+        $class = strtolower(strtok($link->getAttribute('href'), '/?'));
+        $section = 'menu_group_administration';
+        foreach ($groups as $key => $classes) {
+            if (in_array($class, $classes)) {
+                $section = $key;
+                break;
+            }
+        }
+        $sections[$section][] = $item;
+        $root->removeChild($item);
+    }
+
+    foreach ($sections as $key => $items) {
+        if (empty($items)) {
+            continue;
+        }
+        $header = $doc->createElement('li');
+        $header->setAttribute('class', 'nav-header');
+        $header->appendChild($doc->createTextNode(lang($key)));
+        $root->appendChild($header);
+        foreach ($items as $item) {
+            $root->appendChild($item);
+        }
+    }
+
+    // The sidebar stylesheet sets these colors.
+    foreach (iterator_to_array($xpath->query('//*[contains(@class, "text-white") or contains(@class, "text-secondary")]')) as $node) {
+        $node->setAttribute('class', trim(str_replace(array('text-white', 'text-secondary'), '', $node->getAttribute('class'))));
+    }
 }
 
 // Data used by role_links.php to remove links to hidden pages from the screens.

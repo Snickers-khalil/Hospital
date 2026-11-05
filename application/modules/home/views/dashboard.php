@@ -70,7 +70,8 @@
   <link rel="stylesheet" href="adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
   <link rel="stylesheet" href="adminlte/dist/css/changes.css?v=dt-compact">
-  <link rel="stylesheet" href="common/css/medicore-tables.css?v=4">
+  <link rel="stylesheet" href="common/css/medicore-tables.css?v=7">
+  <link rel="stylesheet" href="common/css/medicore-sidebar.css?v=3">
 
   <link rel="stylesheet" href="adminlte/plugins/daterangepicker/daterangepicker.css">
   <link rel="stylesheet" href="adminlte/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
@@ -187,21 +188,13 @@
 
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
-        <!-- Search Section -->
-        <li class="nav-item search-item">
-          <div class="form-inline">
-            <div class="input-group search-container" data-widget="sidebar-search">
-              <input class="form-control form-control-sidebar search-input mr-2" style="height: 40px !important" type="search" placeholder="<?php echo lang('search'); ?>" aria-label="Search">
-            </div>
-          </div>
-        </li>
 
         <!-- Timezone Section -->
         <?php if (!$this->ion_auth->in_group(array('superadmin'))) { ?>
         <li class="nav-item">
           <a href="#" id="timezone-display" class="nav-link nav-link-enhanced timezone-link" data-toggle="modal" data-target="#timezoneModal" title="<?php echo lang('timezone'); ?>">
             <i class="fas fa-clock nav-icon"></i>
-            <span id="current-timezone" class="timezone-text"><?php echo $settings->timezone ?? 'UTC'; ?></span>
+            <span id="current-timezone" class="timezone-text"><?php echo $settings->timezone ?? 'Africa/Tunis'; ?></span>
             <i class="fas fa-edit timezone-edit-icon"></i>
           </a>
         </li>
@@ -541,18 +534,18 @@
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-1 sidebar-tight">
+    <aside class="main-sidebar sidebar-light-primary sidebar-tight mc-sidebar">
       <!-- Brand Logo -->
-      <a href="home" class="brand-link sidebar-brand-compact bg-gradient-to-r from-indigo-900 to-purple-900 text-left">
+      <a href="home" class="brand-link sidebar-brand-compact text-left">
         <?php if (!$this->ion_auth->in_group(array('superadmin'))) { ?>
           <div class="d-flex align-items-center justify-content-start py-0 w-100">
             <img height="40" src="<?php echo $settings->logo_title; ?>" alt="HMS" class="brand-image rounded-circle border border-white shadow-sm">
-            <span class="brand-text text-white font-weight-bold text-uppercase sidebar-brand-title text-left"><?php echo $settings->title; ?></span>
+            <span class="brand-text font-weight-bold text-uppercase sidebar-brand-title text-left"><?php echo $settings->title; ?></span>
           </div>
         <?php } else { ?>
           <div class="d-flex align-items-center justify-content-start py-0 w-100">
             <img height="40" src="<?php echo $settings->logo_title; ?>" alt="HMS" class="brand-image rounded-circle border border-white shadow-sm">
-            <span class="brand-text text-white font-weight-bold sidebar-brand-title-super text-left"><?php echo $settings->title; ?></span>
+            <span class="brand-text font-weight-bold sidebar-brand-title-super text-left"><?php echo $settings->title; ?></span>
           </div>
         <?php } ?>
       </a>
@@ -608,6 +601,8 @@
             </div>
           </div>
         </div> -->
+
+        <?php $this->load->view('home/menu_search'); ?>
 
         <!-- Sidebar Menu -->
         <nav class="">
@@ -1393,6 +1388,7 @@
     
     // Load timezone list - simplified
     $timezones = array(
+      'Africa/Tunis' => "(GMT+01:00) Tunis",
       'UTC' => "(GMT+00:00) UTC",
       'GMT' => "(GMT+00:00) GMT",
       'America/New_York' => "(GMT-05:00) New York",
@@ -1464,7 +1460,7 @@
   <script>
   $(document).ready(function() {
     // Timezone functionality
-    let currentTimezone = '<?php echo $settings->timezone ?? "UTC"; ?>';
+    let currentTimezone = '<?php echo $settings->timezone ?? "Africa/Tunis"; ?>';
     
     // Update preview when timezone changes
     function updatePreview() {
