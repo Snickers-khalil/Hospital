@@ -1719,7 +1719,7 @@ class Frontend extends MX_Controller
         $language_array = array('english', 'arabic', 'spanish', 'french', 'italian', 'portuguese');
 
         if (!in_array($language, $language_array)) {
-            $language = 'english';
+            $language = 'french';
         }
 
         $data = array();

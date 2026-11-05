@@ -236,6 +236,7 @@ if ($language == 'english') {
 </script>
 
 <script src="common/extranal/js/footer.js"></script>
+<?php if (get_instance()->language == 'french') { ?><script src="common/extranal/js/fr_ui.js"></script><?php } ?>
 
 
 

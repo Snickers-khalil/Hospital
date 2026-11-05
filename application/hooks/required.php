@@ -113,7 +113,7 @@ function required()
         }
 
         if (empty($language)) {
-            $language = 'english';
+            $language = 'french';
         }
 
 
@@ -256,7 +256,7 @@ function required()
         if ($CI->router->fetch_class() == 'frontend' && $CI->router->fetch_method() == 'index') {
             $language = $CI->session->userdata('language');
             if (empty($language)) {
-                $language = 'english';
+                $language = 'french';
             }
             $CI->language = $language;
             $CI->lang->load('system_syntax', $language);

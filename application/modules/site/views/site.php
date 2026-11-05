@@ -34,8 +34,8 @@ $site_name = $this->db->get('site_settings')->row()->title;
       n.className += t + "js", ("ontouchstart" in o || o.DocumentTouch && c instanceof DocumentTouch) && (n.className += t + "touch")
     }(window, document);
   </script>
-  <link href="uploads/favicon.png" rel="shortcut icon" type="image/x-icon">
-  <link href="uploads/favicon.png" rel="apple-touch-icon">
+  <link href="uploads/medicore_icon.png" rel="shortcut icon" type="image/x-icon">
+  <link href="uploads/medicore_icon.png" rel="apple-touch-icon">
 </head>
 
 <body class="body">

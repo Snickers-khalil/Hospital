@@ -114,6 +114,7 @@
   <link rel="stylesheet" href="common/assets/bootstrap-datepicker/css/bootstrap-datepicker.css" />
 
 
+  <link rel="icon" href="uploads/medicore_icon.png" type="image/png">
 </head>
 
 <body class="hold-transition sidebar-mini <?php
@@ -539,12 +540,12 @@
       <a href="home" class="brand-link sidebar-brand-compact text-left">
         <?php if (!$this->ion_auth->in_group(array('superadmin'))) { ?>
           <div class="d-flex align-items-center justify-content-start py-0 w-100">
-            <img height="40" src="<?php echo $settings->logo_title; ?>" alt="HMS" class="brand-image rounded-circle border border-white shadow-sm">
+            <img height="40" src="<?php echo $settings->logo_title; ?>" alt="MediCore" class="brand-image border border-white shadow-sm">
             <span class="brand-text font-weight-bold text-uppercase sidebar-brand-title text-left"><?php echo $settings->title; ?></span>
           </div>
         <?php } else { ?>
           <div class="d-flex align-items-center justify-content-start py-0 w-100">
-            <img height="40" src="<?php echo $settings->logo_title; ?>" alt="HMS" class="brand-image rounded-circle border border-white shadow-sm">
+            <img height="40" src="<?php echo $settings->logo_title; ?>" alt="MediCore" class="brand-image border border-white shadow-sm">
             <span class="brand-text font-weight-bold sidebar-brand-title-super text-left"><?php echo $settings->title; ?></span>
           </div>
         <?php } ?>

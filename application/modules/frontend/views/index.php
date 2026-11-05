@@ -10,7 +10,7 @@ $title = explode(' ', $settings->title);
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><?php echo $settings->title; ?></title>
-  <link rel="icon" href="uploads/favicon10.png" type="image/x-icon" />
+  <link rel="icon" href="uploads/medicore_icon.png" type="image/x-icon" />
 
     <!-- SEO Meta Tags -->
     <meta name="description" content="<?php echo isset($settings->description) ? $settings->description : ''; ?>" />
@@ -169,25 +169,22 @@ $title = explode(' ', $settings->title);
                 <div class="flex-shrink-0">
                     <a href="#" class="flex items-center space-x-2.5">
                         <div class="relative w-8 h-8">
-                            <div class="absolute inset-0 bg-gradient-to-r from-primary-600 to-primary-500 rounded-md transform rotate-6 transition-transform group-hover:rotate-12"></div>
                             <div class="absolute inset-0 bg-white rounded-md shadow-sm flex items-center justify-center">
-                                <span class="text-base font-bold text-primary-600">
-                                    <?php echo substr($settings->title, 0, 1); ?>
-                                </span>
+                                <img src="uploads/medicore_icon.png" alt="MediCore" class="w-full h-full object-contain p-0.5">
                             </div>
                         </div>
                         <div>
                             <span class="text-lg sm:text-xl font-extrabold leading-tight">
                                 <span class="text-secondary-900"><?php echo $title[0]; ?></span><span class="text-primary-600"><?php echo isset($title[1]) ? $title[1] : ''; ?></span>
                             </span>
-                            <span class="hidden lg:block text-[10px] text-gray-500 -mt-0.5">Healthcare Management Solutions</span>
+                            <span class="hidden lg:block text-[10px] text-gray-500 -mt-0.5">Solutions de gestion hospitalière</span>
                         </div>
                     </a>
                 </div>
                 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-4 lg:space-x-5 text-sm">
-                    <a href="#home" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium">Home</a>
+                    <a href="#home" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium">Accueil</a>
                     <a href="#features" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"><?php echo lang('service'); ?></a>
 <?php if (payments_enabled()) { ?>
                     <a href="#package" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"><?php echo lang('package'); ?></a>
@@ -232,7 +229,7 @@ $title = explode(' ', $settings->title);
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-200 py-4">
             <div class="px-4 space-y-3">
-                <a href="#home" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 rounded-lg transition-colors">Home</a>
+                <a href="#home" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 rounded-lg transition-colors">Accueil</a>
                 <a href="#features" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 rounded-lg transition-colors"><?php echo lang('service'); ?></a>
 <?php if (payments_enabled()) { ?>
                 <a href="#package" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 rounded-lg transition-colors"><?php echo lang('package'); ?></a>
@@ -281,22 +278,22 @@ $title = explode(' ', $settings->title);
                     <!-- Announcement Badge -->
                     <a href="#features" class="inline-flex items-center px-3 py-1 text-xs sm:text-sm bg-primary-50 rounded-full mb-4 group cursor-pointer hover:bg-primary-100 transition-all duration-300">
                         <span class="animate-pulse w-1.5 h-1.5 bg-primary-600 rounded-full mr-2"></span>
-                        <span class="text-primary-800 font-medium">Discover Our Latest Features</span>
+                        <span class="text-primary-800 font-medium">Découvrez nos dernières fonctionnalités</span>
                         <svg class="w-3.5 h-3.5 ml-1.5 text-primary-600 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </a>
 
                     <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-4 tracking-tight">
-                        <span class="block mb-1 text-secondary-900">Empowering</span>
+                        <span class="block mb-1 text-secondary-900">Simplifier</span>
                         <span class="relative inline-block">
-                            <span class="relative z-10 gradient-text">Healthcare</span>
+                            <span class="relative z-10 gradient-text">la gestion</span>
                             <div class="absolute -bottom-1 left-0 w-full h-2 bg-primary-200/60 -rotate-1"></div>
                         </span>
-                        <span class="block mt-1 text-secondary-900">Management</span>
+                        <span class="block mt-1 text-secondary-900">hospitalière</span>
                     </h1>
                     <p class="text-base sm:text-lg text-gray-600 mb-6 max-w-xl mx-auto lg:mx-0 leading-snug">
-                        Streamline your healthcare facility with our comprehensive hospital management system. Efficient, secure, and user-friendly.
+                        Simplifiez la gestion de votre établissement avec notre système hospitalier complet : efficace, sécurisé et facile à utiliser.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mb-8">
 <?php if (payments_enabled()) { ?>
@@ -342,12 +339,12 @@ $title = explode(' ', $settings->title);
                         <div class="col-span-2">
                             <div class="relative rounded-xl overflow-hidden shadow-lg transform hover:scale-[1.01] transition-transform duration-500">
                                 <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
-                                     alt="Modern Hospital" 
+                                     alt="Hôpital moderne" 
                                      class="w-full h-44 object-cover">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                                 <div class="absolute bottom-3 left-3 text-white">
-                                    <div class="text-xs font-medium">Featured</div>
-                                    <div class="text-sm font-bold">Modern Healthcare</div>
+                                    <div class="text-xs font-medium">À la une</div>
+                                    <div class="text-sm font-bold">Des soins modernes</div>
                                 </div>
                             </div>
                         </div>
@@ -355,13 +352,13 @@ $title = explode(' ', $settings->title);
                         <!-- Smaller Images -->
                         <div class="relative rounded-xl overflow-hidden shadow-md transform hover:scale-[1.01] transition-transform duration-500">
                             <img src="https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
-                                 alt="Medical Technology" 
+                                 alt="Technologie médicale" 
                                  class="w-full h-32 object-cover">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                         </div>
                         <div class="relative rounded-xl overflow-hidden shadow-md transform hover:scale-[1.01] transition-transform duration-500">
                             <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80" 
-                                 alt="Patient Care" 
+                                 alt="Soins aux patients" 
                                  class="w-full h-32 object-cover">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                         </div>
@@ -374,7 +371,7 @@ $title = explode(' ', $settings->title);
                                 <i class="fas fa-user-md text-lg text-blue-600"></i>
                             </div>
                             <div>
-                                <div class="text-[10px] font-medium text-gray-500">Latest Tech</div>
+                                <div class="text-[10px] font-medium text-gray-500">Technologie récente</div>
                                 <div class="text-sm font-bold text-blue-600">HMS Pro</div>
                             </div>
                         </div>
@@ -386,8 +383,8 @@ $title = explode(' ', $settings->title);
                                 <i class="fas fa-heartbeat text-lg text-green-600"></i>
                             </div>
                             <div>
-                                <div class="text-[10px] font-medium text-gray-500">Powered by</div>
-                                <div class="text-sm font-bold text-green-600">AI Care</div>
+                                <div class="text-[10px] font-medium text-gray-500">Propulsé par</div>
+                                <div class="text-sm font-bold text-green-600">Assistance IA</div>
                             </div>
                         </div>
                     </div>
@@ -679,14 +676,14 @@ $title = explode(' ', $settings->title);
                                     <?php echo $settings1->currency; ?>
                                 </span>
                                 <?php echo $package1->monthly_price; ?>
-                                <span class="text-sm font-normal">/month</span>
+                                <span class="text-sm font-normal">/mois</span>
                   </div>
                             <div class="text-2xl sm:text-3xl font-extrabold text2">
                                 <span class="text-sm font-normal">
                                     <?php echo $settings1->currency; ?>
                                 </span>
                                 <?php echo $package1->yearly_price; ?>
-                                <span class="text-sm font-normal">/year</span>
+                                <span class="text-sm font-normal">/an</span>
                             </div>
                         </div>
 
@@ -901,7 +898,7 @@ $title = explode(' ', $settings->title);
                         <div class="flex items-center gap-4 mb-4">
                             <img src="<?php echo $service->img_url ?>" 
                                  class="w-14 h-14 rounded-xl object-cover border-2 border-white shadow-md group-hover:scale-105 transition-transform duration-300 shrink-0" 
-                                 alt="Reviewer">
+                                 alt="Auteur de l'avis">
                             <div>
                                 <h3 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300">
                                     <?php echo $service->title ?>
@@ -978,7 +975,7 @@ $title = explode(' ', $settings->title);
                     <div class="relative">
                         <div class="absolute -top-4 -left-4 w-24 h-24 bg-purple-300/50 rounded-full"></div>
                         <img src="new-fnt/assets/images/Vector (1).svg" 
-                             alt="FAQ Illustration" 
+                             alt="Illustration de la FAQ" 
                              class="relative z-10 w-full max-w-xs mx-auto transform -rotate-6 hover:rotate-0 transition-transform duration-500">
                         <div class="mt-6 text-center">
                             <p class="text-base font-semibold text-indigo-900 mb-3">
@@ -1072,9 +1069,7 @@ $title = explode(' ', $settings->title);
                             <div class="absolute inset-0 bg-gradient-to-r from-primary-600 to-primary-500 rounded-lg transform rotate-6">
                             </div>
                             <div class="absolute inset-0 bg-white rounded-lg shadow-sm flex items-center justify-center">
-                                <span class="text-base font-bold text-primary-600">
-                                    <?php echo substr($settings->title, 0, 1); ?>
-                                </span>
+                                <img src="uploads/medicore_icon.png" alt="MediCore" class="w-full h-full object-contain p-0.5">
                             </div>
                         </div>
                         <div>
@@ -1085,12 +1080,12 @@ $title = explode(' ', $settings->title);
                         </div>
                     </div>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        Transforming healthcare through innovative management solutions.
+                        Transformer la santé grâce à des solutions de gestion innovantes.
                     </p>
                 </div>
 
                 <div>
-                    <h4 class="text-base font-bold mb-3">Quick Links</h4>
+                    <h4 class="text-base font-bold mb-3">Liens rapides</h4>
                     <ul class="space-y-2 text-sm">
                         <li><a href="#features" class="text-gray-400 hover:text-white transition-colors duration-200"><?php echo lang('service'); ?></a></li>
 <?php if (payments_enabled()) { ?>
@@ -1102,7 +1097,7 @@ $title = explode(' ', $settings->title);
                 </div>
 
                 <div>
-                    <h4 class="text-base font-bold mb-3">Language</h4>
+                    <h4 class="text-base font-bold mb-3">Langue</h4>
                     <div class="space-y-2 text-sm">
                         <?php
                         $languages = $this->db->get('language')->result();
@@ -1118,11 +1113,11 @@ $title = explode(' ', $settings->title);
                 </div>
 
                 <div>
-                    <h4 class="text-base font-bold mb-3">Newsletter</h4>
-                    <p class="text-gray-400 text-sm mb-3">Subscribe to our newsletter for updates</p>
+                    <h4 class="text-base font-bold mb-3">Lettre d'information</h4>
+                    <p class="text-gray-400 text-sm mb-3">Abonnez-vous pour recevoir nos actualités</p>
                     <form class="flex">
                         <input type="email" 
-                               placeholder="Enter your email" 
+                               placeholder="Saisissez votre e-mail" 
                                class="px-3 py-2 text-sm rounded-l-lg w-full focus:outline-none text-gray-900">
                         <button class="bg-primary-600 px-4 py-2 rounded-r-lg hover:bg-primary-700 transition-colors duration-200">
                             <i class="fas fa-paper-plane"></i>

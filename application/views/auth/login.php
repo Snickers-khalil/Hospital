@@ -163,7 +163,7 @@
     }
 
     .login-logo img {
-      max-width: 80px;
+      max-width: 210px;
       margin-bottom: 0.5rem;
     }
 
@@ -367,6 +367,7 @@
       opacity: 0.8;
     }
   </style>
+  <link rel="icon" href="uploads/medicore_icon.png" type="image/png">
 </head>
 
 <body class="hold-transition login-page">
@@ -375,7 +376,7 @@
     <div class="btn-group">
       <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
         <i class="flag-icon flag-icon-<?php echo $flagIcon; ?> mr-2"></i>
-        <span class="text-dark"><?php echo ucfirst($this->language); ?></span>
+        <span class="text-dark"><?php echo $this->language == 'french' ? 'Français' : ucfirst($this->language); ?></span>
         </button>
       <div class="dropdown-menu dropdown-menu-right">
         <a href="frontend/changeLanguageFlag?lang=arabic" class="dropdown-item <?php echo ($this->language == 'arabic') ? 'active' : ''; ?>">
@@ -452,8 +453,7 @@
     </div>
     <div class="login-container">
       <div class="login-logo">
-        <img src="https://cdn-icons-png.flaticon.com/512/2037/2037187.png" alt="Logo">
-        <a href="#"><b><?php echo $this->db->get('settings')->row()->title; ?></b></a>
+        <img src="uploads/medicore_logo.png" alt="MediCore">
       </div>
 
       <div class="card">
@@ -501,7 +501,7 @@
           </form>
 
           <div class="divider">
-            <span>or</span>
+            <span>ou</span>
           </div>
 
           <p class="mt-3 mb-0 text-center">
@@ -564,8 +564,7 @@
   <div class="main-container centered-layout">
     <div class="login-container">
       <div class="login-logo">
-        <img src="https://cdn-icons-png.flaticon.com/512/2037/2037187.png" alt="Logo">
-        <a href="#"><b><?php echo $this->db->get('settings')->row()->title; ?></b></a>
+        <img src="uploads/medicore_logo.png" alt="MediCore">
       </div>
 
       <div class="card">
@@ -613,7 +612,7 @@
           </form>
 
           <div class="divider">
-            <span>or</span>
+            <span>ou</span>
           </div>
 
           <p class="mt-3 mb-0 text-center">
