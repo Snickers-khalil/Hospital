@@ -411,7 +411,8 @@ if ($this->session->flashdata('success') || $this->session->flashdata('error') |
 
 <!-- <script src="https://formai-gilt.vercel.app/bot.js" data-bot="demo-form-filler"></script> -->
 
-<?php if (!payments_enabled()) { $this->load->view('home/hide_payments'); } ?>
+<?php if ($this->config->item('payments_enabled') === false) { $this->load->view('home/hide_payments'); } ?>
+<?php $this->load->view('home/role_links'); ?>
 </body>
 
 </html>

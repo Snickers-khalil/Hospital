@@ -1,39 +1,41 @@
 <?php
 
+require_once APPPATH . 'hooks/role_access.php';
+
+// The public site never shows payments. Logged-in staff keep invoices and expenses.
 function payments_enabled()
 {
-    return get_instance()->config->item('payments_enabled') !== false;
+    $CI = get_instance();
+    if ($CI->config->item('payments_enabled') !== false) {
+        return true;
+    }
+    return $CI->ion_auth->logged_in() && !in_array(strtolower($CI->router->class), array('frontend', 'site'));
 }
 
 // Runs last so the module access checks above still see the real module list.
 function payments_guard($CI, $RTR)
 {
-    if (payments_enabled()) {
+    if ($CI->config->item('payments_enabled') !== false) {
         return;
     }
 
     if (isset($CI->modules) && is_array($CI->modules)) {
-        $CI->modules = array_values(array_diff($CI->modules, array('finance', 'pharmacy', 'pgateway')));
+        $CI->modules = array_values(array_diff($CI->modules, array('pharmacy', 'pgateway')));
     }
     if (isset($CI->super_modules) && is_array($CI->super_modules)) {
-        $CI->super_modules = array_values(array_diff($CI->super_modules, array('pgateway', 'request')));
+        $CI->super_modules = array_values(array_diff($CI->super_modules, array('pgateway')));
     }
 
-    // AJAX stays open because other screens (appointments, beds) read data from these controllers.
+    // AJAX stays open because other screens read data from these controllers.
     if ($CI->input->is_ajax_request()) {
         return;
     }
 
     $class = strtolower($RTR->class);
     $method = strtolower($RTR->method);
-    $blocked_classes = array('finance', 'pharmacy', 'pgateway', 'paypal', 'paystack', 'payu', 'status');
+    $blocked_classes = array('pharmacy', 'pgateway', 'paypal', 'paystack', 'payu', 'status');
     $blocked_methods = array(
-        'patient' => array('mypaymenthistory', 'patientpayments', 'myinvoice'),
-        'ambulance' => array('payments'),
-        'settings' => array('subscription', 'changeplan'),
-        'hospital' => array('reportsubscription'),
-        'logs' => array('transactionlogs'),
-        'request' => array('index'),
+        'settings' => array('changeplan'),
         'frontend' => array('addnewhospitalpayment'),
     );
 
@@ -41,7 +43,6 @@ function payments_guard($CI, $RTR)
         redirect($CI->ion_auth->logged_in() ? 'home/comingSoon' : 'frontend');
     }
 }
-
 
 function required()
 {
@@ -350,7 +351,7 @@ function required()
             }
         }
 
-        $common = array('payu', 'status', 'macro', 'auth', 'pservice', 'frontend', 'settings', 'import', 'home', 'profile', 'request', 'api', 'cronjobs', 'logs', 'doctorvisit', 'site', 'testpkz', 'facilitie', 'faq', 'diagnosis', 'treatment', 'symptom', 'advice', 'inventory', 'treatment_plan', 'ai_image_analysis', 'ai_patient_overview', 'emergency', 'ambulance', 'dashboard', 'radiology', 'dental'); 
+        $common = array('payu', 'status', 'macro', 'auth', 'pservice', 'frontend', 'settings', 'import', 'home', 'profile', 'request', 'api', 'cronjobs', 'logs', 'doctorvisit', 'site', 'testpkz', 'facilitie', 'faq', 'diagnosis', 'treatment', 'symptom', 'advice', 'inventory', 'treatment_plan', 'ai_image_analysis', 'ai_patient_overview', 'emergency', 'ambulance', 'dashboard', 'radiology', 'dental', 'insurance'); 
 
         if (!in_array($RTR->class, $common)) {
             if (!$CI->ion_auth->in_group(array('superadmin'))) {
@@ -382,6 +383,7 @@ function required()
 
 
     payments_guard($CI, $RTR);
+    role_access_guard($CI, $RTR);
 
     // if ($RTR->class == "site") {
     //     if ($CI->router->fetch_method() == 'index') {

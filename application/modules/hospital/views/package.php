@@ -72,7 +72,7 @@
                                             <td class="center td_style">
                                                 <?php
                                                 $all_modules = array('accountant', 'appointment', 'lab', 'bed', 'department', 'doctor', 'donor', 'finance', 'pharmacy', 'laboratorist', 'medicine', 'nurse', 'patient', 'pharmacist', 'prescription', 'receptionist', 'report', 'sms', 'notice', 'email');
-                                                $restricted_modules = array_diff($all_modules, $modules);
+                                                $restricted_modules = array_diff($all_modules, $modules, hidden_modules());
                                                 foreach ($restricted_modules as $key1 => $value1) {
                                                     echo $value1 . '<br>';
                                                 }

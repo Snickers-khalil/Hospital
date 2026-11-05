@@ -341,7 +341,7 @@
 
 
 
-<?php if (payments_enabled()) { ?>
+<?php if (payments_enabled() && role_can_open('finance')) { ?>
                                         <?php if (in_array('doctor', $this->modules)) { ?>
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="card stat-card h-100 shadow-sm custom-rounded text-center">
@@ -544,7 +544,7 @@
                                     <?php } ?>
 
                                     <?php if ($this->ion_auth->in_group(array('Nurse'))) { ?>
-                                        <?php if (in_array('notice', $this->modules)) { ?>
+                                        <?php if (in_array('notice', $this->modules) && role_can_open('notice')) { ?>
                                             <div class="row g-2 mt-2">
                                                 <div class="col-md-7 col-sm-12">
                                                     <div class="card card-custom shadow-sm custom-rounded m-1">
@@ -594,7 +594,7 @@
                                                             <?php
                                                             $this->load->model('logs/logs_model');
                                                             $latest_logs = $this->logs_model->getLogsByLimit(5, 0, 'id', 'desc');
-                                                            foreach ($latest_logs as $log) { ?>
+                                                            foreach ($latest_logs as $log) { if ($log->role == 'Pharmacist') { continue; } ?>
                                                                 <div class="list-group-item d-flex justify-content-between align-items-center">
                                                                     <div>
                                                                         <h6 class="mb-1 fw-bold"><?php echo $log->name; ?></h6>
@@ -697,7 +697,7 @@
 
                                     <div class="row g-2">
                                         <?php if ($this->ion_auth->in_group(array('admin'))) { ?>
-                                            <?php if (in_array('appointment', $this->modules)) { ?>
+                                            <?php if (in_array('appointment', $this->modules) && role_can_open('appointment')) { ?>
                                                 <div class="col-md-12">
                                                     <div class="card card-custom shadow-sm custom-rounded m-1">
                                                         <div class="card-header badge-transparent text-left pt-4 pb-3">
@@ -1240,15 +1240,19 @@
                                         <span class="badge badge-primary badge-pill"><?php echo $totalDoctors; ?></span>
                                     </li>
 
+<?php if (role_can_open('appointment')) { ?>
                                     <li class="list-group-item d-flex justify-content-between align-items-center pl-0">
                                         <span><?php echo lang('total') ?> <?php echo lang('appointments') ?></span>
                                         <span class="badge badge-primary badge-pill"><?php echo $totalAppointments; ?></span>
                                     </li>
+<?php } ?>
 
+<?php if (role_can_open('prescription')) { ?>
                                     <li class="list-group-item d-flex justify-content-between align-items-center pl-0">
                                         <span><?php echo lang('total') ?> <?php echo lang('prescriptions') ?></span>
                                         <span class="badge badge-primary badge-pill"><?php echo $totalPrescriptions; ?></span>
                                     </li>
+<?php } ?>
 
                                     <li class="list-group-item d-flex justify-content-between align-items-center pl-0">
                                         <span><?php echo lang('total') ?> <?php echo lang('nurses') ?></span>
@@ -1270,10 +1274,6 @@
                                     <li class="list-group-item d-flex justify-content-between align-items-center pl-0">
                                         <span><?php echo lang('nurses_on_duty') ?></span>
                                         <span class="badge badge-primary badge-pill"><?php echo $nursesOnDuty; ?></span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center pl-0">
-                                        <span><?php echo lang('pharmacists_on_duty') ?></span>
-                                        <span class="badge badge-primary badge-pill"><?php echo $pharmacistsOnDuty; ?></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center pl-0">
                                         <span><?php echo lang('laboratorists_on_duty') ?></span>
@@ -1491,6 +1491,7 @@
                                         </div>
                                     </div>
 <?php } ?>
+<?php if (role_can_open('appointment')) { ?>
                                     <div class="col-6 mb-3">
                                         <div class="stat-card bg-light p-3 mr-3 border rounded">
                                             <i class="fas fa-calendar-check bg-secondary fa-lg p-2 rounded-circle"></i>
@@ -1498,6 +1499,7 @@
                                             <p class="fw-bold text-dark mb-0" style="font-size: 1.1rem;"><?php echo $this_day['appointment'] ?? 0; ?></p>
                                         </div>
                                     </div>
+<?php } ?>
                                 </div>
                             </div>
                         </div>
@@ -1550,6 +1552,7 @@
                                         </div>
                                     </div>
 <?php } ?>
+<?php if (role_can_open('appointment')) { ?>
                                     <div class="col-6 mb-3">
                                         <div class="stat-card bg-light p-3 mr-3 border rounded">
                                             <i class="fas fa-calendar-check bg-secondary fa-lg p-2 rounded-circle"></i>
@@ -1557,6 +1560,7 @@
                                             <p class="fw-bold text-dark mb-0" style="font-size: 1.1rem;"><?php echo $this_month['appointment'] ?? 0; ?></p>
                                         </div>
                                     </div>
+<?php } ?>
                                 </div>
                             </div>
                         </div>
@@ -1609,6 +1613,7 @@
                                         </div>
                                     </div>
 <?php } ?>
+<?php if (role_can_open('appointment')) { ?>
                                     <div class="col-6 mb-3">
                                         <div class="stat-card bg-light p-3 mr-3 border rounded">
                                             <i class="fas fa-calendar-check bg-secondary fa-lg p-2 rounded-circle"></i>
@@ -1616,6 +1621,7 @@
                                             <p class="fw-bold text-dark mb-0" style="font-size: 1.1rem;"><?php echo $this_year['appointment'] ?? 0; ?></p>
                                         </div>
                                     </div>
+<?php } ?>
                                 </div>
                             </div>
                         </div>

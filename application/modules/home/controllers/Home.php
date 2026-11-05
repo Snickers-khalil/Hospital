@@ -80,13 +80,13 @@ class Home extends MX_Controller
             $data['expenses'] = $this->finance_model->getExpense();
 
             if ($this->ion_auth->in_group(array('Doctor'))) {
-                redirect('doctor/details');
+                redirect('patient');
             } else {
                 $data['appointments'] = $this->appointment_model->getAppointment();
             }
 
-            if ($this->ion_auth->in_group(array('Accountant', 'Receptionist'))) {
-                redirect(payments_enabled() ? 'finance/addPaymentView' : 'patient');
+            if ($this->ion_auth->in_group(array('Accountant', 'Receptionist', 'Nurse'))) {
+                redirect('patient');
             }
 
             if ($this->ion_auth->in_group(array('Pharmacist'))) {

@@ -17,9 +17,11 @@
                     </nav>
                 </div>
                 <div class="col-sm-6 text-right">
+                    <?php if (role_can_open('patient', 'addnewview')) { ?>
                     <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-sm px-4 py-3">
                         <i class="fa fa-plus"></i> <?php echo lang('add_new'); ?> <?php echo lang('patient'); ?>
                     </a>
+                    <?php } ?>
                 </div>
             </div>
         </div>

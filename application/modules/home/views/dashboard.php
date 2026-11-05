@@ -206,7 +206,7 @@
         </li>
         <?php } ?>
 
-        <?php $this->load->view('available'); ?>
+        <?php if (role_can_open('attendance')) { $this->load->view('available'); } ?>
 
         <?php if ($this->ion_auth->in_group(array('admin'))) { ?>
           <li class="nav-item dropdown d-none d-md-block">
@@ -361,7 +361,7 @@
 
         <!-- Messages Dropdown Menu -->
 
-        <?php if ($this->ion_auth->in_group(array('admin', 'Nurse', 'Accountant', 'Pharmacist', 'Doctor', 'Laboratorist', 'Receptionist'))) { ?>
+        <?php if ($this->ion_auth->in_group(array('admin', 'Nurse', 'Accountant', 'Pharmacist', 'Doctor', 'Laboratorist', 'Receptionist')) && role_can_open('chat')) { ?>
           <?php if (in_array('chat', $this->modules)) { ?>
             <li class="nav-item dropdown d-none d-md-block">
               <a class="nav-link nav-link-enhanced chat-link" href="chat" title="<?php echo lang('chat'); ?>">
@@ -616,7 +616,7 @@
 
 
 
-            <?php $this->load->view('menu'); ?>
+            <?php ob_start(); $this->load->view('menu'); echo role_menu_filter(ob_get_clean()); ?>
 
             <?php
             //  $this->load->view('menu_demo');

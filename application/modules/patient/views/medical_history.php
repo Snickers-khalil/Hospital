@@ -58,62 +58,62 @@
                             <section class="">
                                 <section class="card-body">
                                     <div class="">
+<?php $show_clinical_tabs = role_can_open('symptom'); $show_record_tabs = $show_clinical_tabs || $this->ion_auth->in_group(array('Patient')); ?>
                                         <ul class="nav nav-tabs card-header-tabs mb-3 text-md">
                                             <li class="nav-item">
                                                 <a class="nav-link <?php echo ($redirect_tab == '') ? 'active' : ''; ?>"
                                                     data-toggle="tab" href="#basic"><?php echo lang('basic'); ?></a>
                                             </li>
-                                            <?php if (in_array('appointment', $this->modules)) { ?>
+<?php if (in_array('appointment', $this->modules) && role_can_open('appointment')) { ?>
                                                 <li class="nav-item">
                                                     <a class="nav-link <?php echo ($redirect_tab == 'appointment') ? 'active' : ''; ?>"
                                                         data-toggle="tab"
                                                         href="#appointments"><?php echo lang('appointments'); ?></a>
                                                 </li>
                                             <?php } ?>
+<?php if ($show_clinical_tabs) { ?>
                                             <li class="nav-item">
                                                 <a class="nav-link <?php echo ($redirect_tab == 'vital') ? 'active' : ''; ?>"
                                                     data-toggle="tab"
                                                     href="#vital"><?php echo lang('vital_signs'); ?></a>
                                             </li>
+<?php } ?>
+<?php if ($show_record_tabs) { ?>
                                              <li class="nav-item">
                                                 <a class="nav-link <?php echo ($redirect_tab == 'case') ? 'active' : ''; ?>" data-toggle="tab" href="#home"><?php echo lang('case_history'); ?></a>
                                             </li>
-                                            <?php if (in_array('prescription', $this->modules)) { ?>
+<?php } ?>
+<?php if (in_array('prescription', $this->modules) && role_can_open('prescription')) { ?>
                                                 <li class="nav-item">
                                                     <a class="nav-link" data-toggle="tab"
                                                         href="#about"><?php echo lang('prescription'); ?></a>
                                                 </li>
                                             <?php } ?>
-                                            <?php if (in_array('lab', $this->modules)) { ?>
+<?php if (in_array('lab', $this->modules) && role_can_open('lab')) { ?>
                                                 <li class="nav-item">
                                                     <a class="nav-link" data-toggle="tab"
                                                         href="#lab"><?php echo lang('lab'); ?></a>
                                                 </li>
                                             <?php } ?>
+<?php if ($show_record_tabs) { ?>
                                             <li class="nav-item">
                                                 <a class="nav-link <?php echo ($redirect_tab == 'files') ? 'active' : ''; ?>"
                                                     data-toggle="tab"
                                                     href="#profile"><?php echo lang('documents'); ?></a>
                                             </li>
-                                            <?php if (in_array('bed', $this->modules)) { ?>
+<?php } ?>
+<?php if (in_array('bed', $this->modules) && role_can_open('bed')) { ?>
                                                 <li class="nav-item">
                                                     <a class="nav-link" data-toggle="tab"
                                                         href="#contact"><?php echo lang('bed'); ?></a>
                                                 </li>
                                             <?php } ?>
-                                            <?php if (!$this->ion_auth->in_group(array('Patient'))) {
-                                                if ($settings->show_odontogram_in_history == 'yes') { ?>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link <?php echo ($redirect_tab == 'odontogram') ? 'active' : ''; ?>"
-                                                            data-toggle="tab"
-                                                            href="#odontogram"><?php echo lang('odontogram'); ?></a>
-                                                    </li>
-                                            <?php }
-                                            } ?>
+<?php if ($show_clinical_tabs) { ?>
                                             <li class="nav-item">
                                                 <a class="nav-link" data-toggle="tab"
                                                     href="#timeline"><?php echo lang('timeline'); ?></a>
                                             </li>
+<?php } ?>
                                         </ul>
                                     </div>
 
