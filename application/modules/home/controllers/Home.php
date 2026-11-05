@@ -86,11 +86,11 @@ class Home extends MX_Controller
             }
 
             if ($this->ion_auth->in_group(array('Accountant', 'Receptionist'))) {
-                redirect('finance/addPaymentView');
+                redirect(payments_enabled() ? 'finance/addPaymentView' : 'patient');
             }
 
             if ($this->ion_auth->in_group(array('Pharmacist'))) {
-                redirect('finance/pharmacy/home');
+                redirect(payments_enabled() ? 'finance/pharmacy/home' : 'medicine');
             }
 
             if ($this->ion_auth->in_group(array('Patient'))) {
@@ -367,6 +367,13 @@ class Home extends MX_Controller
         }
     }
 
+
+    public function comingSoon()
+    {
+        $this->load->view('dashboard');
+        $this->load->view('coming_soon');
+        $this->load->view('footer');
+    }
 
     public function permission()
     {

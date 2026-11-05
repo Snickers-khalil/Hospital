@@ -467,7 +467,9 @@ $site_name = $this->db->get('site_settings')->row()->title;
           <h5 class="text-white mb-4"> <?php echo lang('About us'); ?></h5>
           <ul class="list-unstyled">
             <li class="mb-2"><a href="#" class="text-decoration-none about-css"> <?php echo lang('How it works'); ?></a></li>
+<?php if (payments_enabled()) { ?>
             <li class="mb-2"><a href="#" class="text-decoration-none about-css"> <?php echo lang('Pricing'); ?></a></li>
+<?php } ?>
             <li class="mb-2"><a href="#" class="text-decoration-none about-css"> <?php echo lang('Docs'); ?></a></li>
           </ul>
         </div>

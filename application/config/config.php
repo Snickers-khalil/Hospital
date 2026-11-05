@@ -234,7 +234,7 @@ $config['allow_get_array'] = true;
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 0;
+$config['log_threshold'] = 4;
 
 /*
 |--------------------------------------------------------------------------
@@ -388,10 +388,13 @@ $config['encryption_key'] = getenv('APP_KEY') ?: '';
 | except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
 |
 */
+// MediCore: false hides all payment features and shows 'Coming soon'; true restores them.
+$config['payments_enabled'] = false;
+
 $config['sess_driver'] = getenv('SESSION_DRIVER') ?: 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = getenv('SESSION_LIFETIME') ?: 7200;
-$config['sess_save_path'] = sys_get_temp_dir();
+$config['sess_save_path'] = getenv('SESSION_SAVE_PATH') ?: sys_get_temp_dir();
 $config['sess_match_ip'] = false;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = false;

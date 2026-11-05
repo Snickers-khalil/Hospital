@@ -47,6 +47,7 @@
                                         </div>
                                     </div>
                                 </div>
+<?php if (payments_enabled()) { ?>
                                 <div class="col-md-3">
                                     <div class="info-box bg-green">
                                         <span class="info-box-icon"><i class="fa fa-dollar"></i></span>
@@ -56,6 +57,7 @@
                                         </div>
                                     </div>
                                 </div>
+<?php } ?>
                                 <div class="col-md-3">
                                     <div class="info-box bg-yellow">
                                         <span class="info-box-icon"><i class="fa fa-calendar"></i></span>

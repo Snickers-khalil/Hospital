@@ -99,11 +99,13 @@
                                 <i class="fas fa-calendar-check mr-1"></i> <?php echo lang('bookings'); ?>
                             </a>
                         </li>
+<?php if (payments_enabled()) { ?>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#payments" role="tab">
                                 <i class="fas fa-credit-card mr-1"></i> <?php echo lang('payments'); ?>
                             </a>
                         </li>
+<?php } ?>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#reports" role="tab">
                                 <i class="fas fa-chart-bar mr-1"></i> <?php echo lang('reports'); ?>

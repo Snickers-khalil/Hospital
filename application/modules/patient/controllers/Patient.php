@@ -1600,6 +1600,9 @@ $data['doctor'] = $this->doctor_model->getDoctorById($data['case']->doctor_id);
             $options3 = '<a class="btn btn-outline-info btn-sm mb-1" title="' . lang('details') . '" href="patient/medicalHistory?id=' . $patient->id . '"><i class="fa fa-stethoscope"></i> ' . lang('details') . '</a>';
 
             $options4 = '<a class="btn btn-outline-secondary btn-sm mb-1" title="' . lang('payment') . '" href="finance/patientPaymentHistory?patient=' . $patient->id . '"><i class="fa fa-money-bill-alt"></i> ' . lang('payment') . '</a>';
+            if (!payments_enabled()) {
+                $options4 = '';
+            }
 
             if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist', 'Laboratorist', 'Nurse', 'Doctor'))) {
                 $options5 = '<a class="btn btn-outline-danger delete_button btn-sm mb-1" title="' . lang('delete') . '" href="patient/delete?id=' . $patient->id . '" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i class="fa fa-trash"></i> ' . lang('') . '</a>';
@@ -1656,6 +1659,11 @@ $data['doctor'] = $this->doctor_model->getDoctorById($data['case']->doctor_id);
         }
 
         if (!empty($data['patients'])) {
+        if (!payments_enabled() && $this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist'))) {
+            foreach ($info as $row_key => $row) {
+                array_splice($info[$row_key], 3, 1);
+            }
+        }
             $output = array(
                 "draw" => intval($requestData['draw']),
                 "recordsTotal" => count($this->patient_model->getPatient()),

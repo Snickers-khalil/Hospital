@@ -279,8 +279,12 @@
                                                                     <th><?php echo lang('doctor'); ?></th>
                                                                     <th><?php echo lang('status'); ?></th>
                                                                     <th><?php echo lang('description'); ?></th>
+<?php if (payments_enabled()) { ?>
                                                                     <th><?php echo lang('charges'); ?></th>
+<?php } ?>
+<?php if (payments_enabled()) { ?>
                                                                     <th><?php echo lang('bill_status'); ?></th>
+<?php } ?>
                                                                     <?php if (!$this->ion_auth->in_group('Patient')) { ?>
                                                                         <th class="no-print"><?php echo lang('options'); ?>
                                                                         </th>
@@ -344,8 +348,10 @@
                                                                         <td><?php if (!empty($appointment->visit_description)) {
                                                                                 echo $this->doctorvisit_model->getDoctorVisitById($appointment->visit_description)->visit_description;
                                                                             } ?></td>
+<?php if (payments_enabled()) { ?>
                                                                         <td><?php echo $this->settings->currency . $appointment->visit_charges; ?>
                                                                         </td>
+<?php } ?>
 
 
                                                                         <?php
@@ -366,7 +372,9 @@
                                                                         ?>
 
 
+<?php if (payments_enabled()) { ?>
                                                                         <td><?php echo $bill_status; ?></td>
+<?php } ?>
 
 
 

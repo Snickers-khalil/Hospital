@@ -72,7 +72,9 @@
                                                                 <th><?php echo lang('patient_id'); ?></th>
                                                                 <th><?php echo lang('patient'); ?></th>
                                                                 <th><?php echo lang('status'); ?></th>
+<?php if (payments_enabled()) { ?>
                                                                 <th><?php echo lang('bill_status'); ?></th>
+<?php } ?>
                                                                 <th class="no-print"><?php echo lang('options'); ?></th>
                                                             </tr>
                                                         </thead>
@@ -108,7 +110,9 @@
                                                                         <td><?php echo $todays_appointment->patient; ?></td>
                                                                         <td><?php echo $patient_details->name; ?></td>
                                                                         <td><?php echo $todays_appointment->status; ?></td>
+<?php if (payments_enabled()) { ?>
                                                                         <td><?php echo $bill_status; ?></td>
+<?php } ?>
                                                                         <td class="no-print d-flex gap-1">
                                                                             <button type="button" class="btn btn-info btn-sm btn_width editAppointmentButton" title="<?php echo lang('edit'); ?>" data-toggle="modal" data-id="<?php echo $todays_appointment->id; ?>"><i class="fa fa-edit"></i> </button>
                                                                             <a class="btn btn-danger btn-sm btn_width delete_button" title="<?php echo lang('delete'); ?>" href="appointment/delete?id=<?php echo $todays_appointment->id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i> </a>

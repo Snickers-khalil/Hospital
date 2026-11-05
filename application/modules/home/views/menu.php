@@ -95,12 +95,14 @@
                 </a>
             </li>
             <?php if ($this->ion_auth->in_group('admin')) { ?>
+<?php if (payments_enabled()) { ?>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="finance/addPaymentViewQuick">
                         <i class="text-secondary nav-icon far fa-circle"></i>
                         <p><?php echo lang('add_payment'); ?></p>
                     </a>
                 </li>
+<?php } ?>
             <?php } ?>
             <li class="nav-item">
                 <a class="nav-link text-white" href="bed/addAllotmentViewQuick">
@@ -212,12 +214,14 @@
                         </a>
                     </li>
                     <?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Doctor', 'Receptionist'))) { ?>
+<?php if (payments_enabled()) { ?>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="patient/patientPayments">
                                 <i class="text-secondary nav-icon far fa-circle"></i>
                                 <p><?php echo lang('payments'); ?></p>
                             </a>
                         </li>
+<?php } ?>
                     <?php } ?>
                 <?php } ?>
             <?php } ?>
@@ -865,12 +869,14 @@ if ($this->ion_auth->in_group(array('Receptionist'))) {
                     <p><?php echo lang('new_booking'); ?></p>
                 </a>
             </li>
+<?php if (payments_enabled()) { ?>
             <li class="nav-item">
                 <a class="nav-link text-white" href="ambulance/payments">
                     <i class="text-secondary nav-icon far fa-circle"></i>
                     <p><?php echo lang('payments'); ?></p>
                 </a>
             </li>
+<?php } ?>
             <li class="nav-item">
                 <a class="nav-link text-white" href="ambulance/reports">
                     <i class="text-secondary nav-icon far fa-circle"></i>
@@ -1403,9 +1409,11 @@ if ($this->ion_auth->in_group(array('Receptionist'))) {
             <li class="nav-item"><a class="nav-link text-white" href="settings"><i class="text-secondary nav-icon far fa-circle"></i>
                     <p><?php echo lang('system_settings'); ?></p>
                 </a></li>
+<?php if (payments_enabled()) { ?>
             <li class="nav-item"><a class="nav-link text-white" href="pgateway"><i class="text-secondary nav-icon far fa-circle"></i>
                     <p><?php echo lang('payment_gateway'); ?></p>
                 </a></li>
+<?php } ?>
             <li class="nav-item"><a class="nav-link text-white" href="settings/chatgpt"><i class="text-secondary nav-icon far fa-circle"></i>
                     <p><?php echo lang('ai_settings'); ?></p>
                 </a></li>
@@ -1417,18 +1425,22 @@ if ($this->ion_auth->in_group(array('Receptionist'))) {
                         <p><?php echo lang('bulk'); ?> <?php echo lang('import'); ?></p>
                     </a></li>
             <?php } ?>
+<?php if (payments_enabled()) { ?>
             <li class="nav-item"><a class="nav-link text-white" href="transactionLogs"><i class="text-secondary nav-icon far fa-circle"></i>
                     <p><?php echo lang('transaction_logs'); ?></p>
                 </a></li>
+<?php } ?>
             <li class="nav-item"><a class="nav-link text-white" href="logs"><i class="text-secondary nav-icon far fa-circle"></i>
                     <p><?php echo lang('user'); ?> <?php echo lang('login_logs'); ?></p>
                 </a></li>
+<?php if (payments_enabled()) { ?>
             <li class="nav-item">
                 <a class="nav-link text-white" href="settings/subscription">
                     <i class="text-secondary nav-icon far fa-user"></i>
                     <p> <?php echo lang('subscription'); ?> </p>
                 </a>
             </li>
+<?php } ?>
             <?php if (in_array('file', $this->modules)) { ?>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="#">
@@ -1703,12 +1715,14 @@ if ($this->ion_auth->in_group(array('Receptionist'))) {
                 </li>
             <?php } ?>
             <?php if (in_array('request', $this->super_modules)) { ?>
+<?php if (payments_enabled()) { ?>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="request">
                         <i class="text-secondary nav-icon far fa-circle"></i>
                         <p><?php echo lang('subscription'); ?> <?php echo lang('requests'); ?></p>
                     </a>
                 </li>
+<?php } ?>
             <?php } ?>
         </ul>
     </li>
@@ -1750,12 +1764,14 @@ if ($this->ion_auth->in_group(array('Receptionist'))) {
                         <p><?php echo lang('registered_doctor'); ?></p>
                     </a>
                 </li>
+<?php if (payments_enabled()) { ?>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="hospital/reportSubscription">
                         <i class="text-secondary nav-icon far fa-circle"></i>
                         <p><?php echo lang('subscription_report'); ?></p>
                     </a>
                 </li>
+<?php } ?>
             <?php } ?>
         </ul>
     </li>
@@ -1843,10 +1859,12 @@ if ($this->ion_auth->in_group(array('Receptionist'))) {
         </a>
     </li>
     <?php if (in_array('pgateway', $this->super_modules)) { ?>
+<?php if (payments_enabled()) { ?>
         <li class="nav-item"><a class="nav-link text-white" href="pgateway"><i class="text-secondary nav-icon far fa-credit-card"></i>
                 <p><?php echo lang('payment_gateway'); ?></p>
             </a>
         </li>
+<?php } ?>
     <?php } ?>
     <li class="nav-item"><a class="nav-link text-white" href="settings/language"><i class="text-secondary nav-icon fas fa-language"></i>
             <p><?php echo lang('language'); ?></p>

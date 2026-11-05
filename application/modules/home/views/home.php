@@ -37,9 +37,11 @@
 
                     <?php if ($this->ion_auth->in_group('admin')): ?>
                         <div class="d-flex justify-content-end">
+<?php if (payments_enabled()) { ?>
                             <a href="finance/addPaymentView" class="btn btn-primary btn-sm mr-1 mr-sm-2 px-3 py-1">
                                 <i class="fa fa-plus mr-1"></i> <?php echo lang('new_invoice'); ?>
                             </a>
+<?php } ?>
                             <a href="patient/addNewView" class="btn btn-success btn-sm mr-1 mr-sm-2 px-3 py-1">
                                 <i class="fa fa-plus mr-1"></i> <?php echo lang('add_patient'); ?>
                             </a>
@@ -339,6 +341,7 @@
 
 
 
+<?php if (payments_enabled()) { ?>
                                         <?php if (in_array('doctor', $this->modules)) { ?>
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="card stat-card h-100 shadow-sm custom-rounded text-center">
@@ -443,6 +446,7 @@
                                                 </div>
                                             </div>
                                         <?php } ?>
+<?php } ?>
                                     </div>
 
                                     <?php if ($this->ion_auth->in_group(array('admin'))) { ?>
@@ -613,6 +617,7 @@
                                             </div>
                                         </div>
 
+<?php if (payments_enabled()) { ?>
                                         <div class="row g-2 logs-row">
                                             <div class="col-md-12">
                                                 <div class="card card-custom shadow-sm custom-rounded m-1">
@@ -682,6 +687,7 @@
                                                 </div>
                                             </div>
                                         </div>
+<?php } ?>
                                     <?php } ?>
 
 
@@ -867,6 +873,7 @@
 
                                         <div id="piechart_3d_superadmin" class="card"></div>
                                     </div>
+<?php if (payments_enabled()) { ?>
                                     <div class="col-md-4">
                                         <section class="card">
                                             <header class="card-header">
@@ -892,6 +899,8 @@
                                             </div>
                                         </section>
                                     </div>
+<?php } ?>
+<?php if (payments_enabled()) { ?>
                                     <div class="col-md-4">
                                         <section class="card">
                                             <header class="card-header">
@@ -918,6 +927,8 @@
                                         </section>
 
                                     </div>
+<?php } ?>
+<?php if (payments_enabled()) { ?>
                                     <div class="col-md-4">
                                         <section class="card">
                                             <header class="card-header">
@@ -942,6 +953,7 @@
                                             </div>
                                         </section>
                                     </div>
+<?php } ?>
                                 </div>
                             <?php } ?>
                         <?php } ?>
@@ -1459,6 +1471,7 @@
                                             <p class="fw-bold text-dark mb-0" style="font-size: 1.1rem;"><?php echo $registeredToday ?? 0; ?></p>
                                         </div>
                                     </div>
+<?php if (payments_enabled()) { ?>
                                     <div class="col-6 mb-3">
                                         <div class="stat-card bg-light p-3 mr-3 border rounded">
                                             <i class="fas fa-dollar-sign bg-primary fa-lg p-2 rounded-circle"></i>
@@ -1466,8 +1479,10 @@
                                             <p class="fw-bold text-dark mb-0" style="font-size: 1.1rem;"><?php echo $settings->currency; ?><?php echo format_number_short($this_day['payment'] ?? 0, 2, '.', ','); ?></p>
                                         </div>
                                     </div>
+<?php } ?>
                                 </div>
                                 <div class="row text-center">
+<?php if (payments_enabled()) { ?>
                                     <div class="col-6 mb-3">
                                         <div class="stat-card bg-light p-3 ml-3 border rounded">
                                             <i class="fas fa-money-bill-wave bg-warning fa-lg p-2 rounded-circle"></i>
@@ -1475,6 +1490,7 @@
                                             <p class="fw-bold text-dark mb-0" style="font-size: 1.1rem;"><?php echo $settings->currency; ?><?php echo format_number_short($this_day['expense'] ?? 0, 2, '.', ','); ?></p>
                                         </div>
                                     </div>
+<?php } ?>
                                     <div class="col-6 mb-3">
                                         <div class="stat-card bg-light p-3 mr-3 border rounded">
                                             <i class="fas fa-calendar-check bg-secondary fa-lg p-2 rounded-circle"></i>
@@ -1514,6 +1530,7 @@
                                             <p class="fw-bold text-dark mb-0" style="font-size: 1.1rem;"><?php echo $registeredThisMonth ?? 0; ?></p>
                                         </div>
                                     </div>
+<?php if (payments_enabled()) { ?>
                                     <div class="col-6 mb-3">
                                         <div class="stat-card bg-light p-3 mr-3 border rounded">
                                             <i class="fas fa-dollar-sign bg-primary fa-lg p-2 rounded-circle"></i>
@@ -1521,8 +1538,10 @@
                                             <p class="fw-bold text-dark mb-0" style="font-size: 1.1rem;"><?php echo $settings->currency; ?><?php echo format_number_short($this_month['payment'] ?? 0, 2, '.', ','); ?></p>
                                         </div>
                                     </div>
+<?php } ?>
                                 </div>
                                 <div class="row text-center">
+<?php if (payments_enabled()) { ?>
                                     <div class="col-6 mb-3">
                                         <div class="stat-card bg-light p-3 ml-3 border rounded">
                                             <i class="fas fa-money-bill-wave bg-warning fa-lg p-2 rounded-circle"></i>
@@ -1530,6 +1549,7 @@
                                             <p class="fw-bold text-dark mb-0" style="font-size: 1.1rem;"><?php echo $settings->currency; ?><?php echo format_number_short($this_month['expense'] ?? 0, 2, '.', ','); ?></p>
                                         </div>
                                     </div>
+<?php } ?>
                                     <div class="col-6 mb-3">
                                         <div class="stat-card bg-light p-3 mr-3 border rounded">
                                             <i class="fas fa-calendar-check bg-secondary fa-lg p-2 rounded-circle"></i>
@@ -1569,6 +1589,7 @@
                                             <p class="fw-bold text-dark mb-0" style="font-size: 1.1rem;"><?php echo $registeredThisYear ?? 0; ?></p>
                                         </div>
                                     </div>
+<?php if (payments_enabled()) { ?>
                                     <div class="col-6 mb-3">
                                         <div class="stat-card bg-light p-3 mr-3 border rounded">
                                             <i class="fas fa-dollar-sign bg-primary fa-lg p-2 rounded-circle"></i>
@@ -1576,8 +1597,10 @@
                                             <p class="fw-bold text-dark mb-0" style="font-size: 1.1rem;"><?php echo $settings->currency; ?><?php echo format_number_short($this_year['payment'] ?? 0, 2, '.', ','); ?></p>
                                         </div>
                                     </div>
+<?php } ?>
                                 </div>
                                 <div class="row text-center">
+<?php if (payments_enabled()) { ?>
                                     <div class="col-6 mb-3">
                                         <div class="stat-card bg-light p-3 ml-3 border rounded">
                                             <i class="fas fa-money-bill-wave bg-warning fa-lg p-2 rounded-circle"></i>
@@ -1585,6 +1608,7 @@
                                             <p class="fw-bold text-dark mb-0" style="font-size: 1.1rem;"><?php echo $settings->currency; ?><?php echo format_number_short($this_year['expense'] ?? 0, 2, '.', ','); ?></p>
                                         </div>
                                     </div>
+<?php } ?>
                                     <div class="col-6 mb-3">
                                         <div class="stat-card bg-light p-3 mr-3 border rounded">
                                             <i class="fas fa-calendar-check bg-secondary fa-lg p-2 rounded-circle"></i>

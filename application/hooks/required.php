@@ -1,5 +1,48 @@
 <?php
 
+function payments_enabled()
+{
+    return get_instance()->config->item('payments_enabled') !== false;
+}
+
+// Runs last so the module access checks above still see the real module list.
+function payments_guard($CI, $RTR)
+{
+    if (payments_enabled()) {
+        return;
+    }
+
+    if (isset($CI->modules) && is_array($CI->modules)) {
+        $CI->modules = array_values(array_diff($CI->modules, array('finance', 'pharmacy', 'pgateway')));
+    }
+    if (isset($CI->super_modules) && is_array($CI->super_modules)) {
+        $CI->super_modules = array_values(array_diff($CI->super_modules, array('pgateway', 'request')));
+    }
+
+    // AJAX stays open because other screens (appointments, beds) read data from these controllers.
+    if ($CI->input->is_ajax_request()) {
+        return;
+    }
+
+    $class = strtolower($RTR->class);
+    $method = strtolower($RTR->method);
+    $blocked_classes = array('finance', 'pharmacy', 'pgateway', 'paypal', 'paystack', 'payu', 'status');
+    $blocked_methods = array(
+        'patient' => array('mypaymenthistory', 'patientpayments', 'myinvoice'),
+        'ambulance' => array('payments'),
+        'settings' => array('subscription', 'changeplan'),
+        'hospital' => array('reportsubscription'),
+        'logs' => array('transactionlogs'),
+        'request' => array('index'),
+        'frontend' => array('addnewhospitalpayment'),
+    );
+
+    if (in_array($class, $blocked_classes) || (isset($blocked_methods[$class]) && in_array($method, $blocked_methods[$class]))) {
+        redirect($CI->ion_auth->logged_in() ? 'home/comingSoon' : 'frontend');
+    }
+}
+
+
 function required()
 {
     $CI = &get_instance();
@@ -337,6 +380,8 @@ function required()
         $CI->lang->load('system_syntax', $CI->language);
     }
 
+
+    payments_guard($CI, $RTR);
 
     // if ($RTR->class == "site") {
     //     if ($CI->router->fetch_method() == 'index') {

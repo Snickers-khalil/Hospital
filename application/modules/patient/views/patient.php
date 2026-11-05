@@ -38,7 +38,7 @@
                                         <th class="font-weight-bold text-uppercase"><?php echo lang('id'); ?></th>
                                         <th class="font-weight-bold"><?php echo lang('name'); ?></th>
                                         <th class="font-weight-bold"><?php echo lang('phone'); ?></th>
-                                        <?php if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist'))) { ?>
+                                        <?php if (payments_enabled() && $this->ion_auth->in_group(array('admin', 'Accountant', 'Receptionist'))) { ?>
                                             <th class="font-weight-bold"><?php echo lang('due_balance'); ?></th>
                                         <?php } ?>
                                         <th class="font-weight-bold no-print"><?php echo lang('options'); ?></th>

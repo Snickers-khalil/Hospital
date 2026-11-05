@@ -172,7 +172,7 @@
                                 </div>
 
                                 <!-- Payment Details -->
-                                <div class="row mb-5">
+                                <div class="row mb-5"<?php echo payments_enabled() ? '' : ' data-payhide'; ?>>
                                     <div class="col-12 mb-4">
                                         <h3 class="border-bottom border-danger pb-3 text-uppercase font-weight-900">
                                             <i class="fas fa-credit-card mr-3 text-danger"></i><?php echo lang('payment_details'); ?>

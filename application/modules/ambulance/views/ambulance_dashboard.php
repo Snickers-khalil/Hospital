@@ -111,11 +111,13 @@
                                         <i class="fa fa-ambulance"></i><br><?php echo lang('add_ambulance'); ?>
                                     </a>
                                 </div>
+<?php if (payments_enabled()) { ?>
                                 <div class="col-md-2">
                                     <a href="<?php echo base_url(); ?>ambulance/payments" class="btn btn-warning btn-block">
                                         <i class="fa fa-credit-card"></i><br><?php echo lang('payments'); ?>
                                     </a>
                                 </div>
+<?php } ?>
                                 <div class="col-md-2">
                                     <a href="<?php echo base_url(); ?>ambulance/reports" class="btn btn-danger btn-block">
                                         <i class="fa fa-bar-chart"></i><br><?php echo lang('reports'); ?>
