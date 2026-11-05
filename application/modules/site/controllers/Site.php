@@ -886,7 +886,7 @@ class Site extends MX_Controller
         $phone = $this->input->post('phone');
         $emergency = $this->input->post('emergency');
         $support = $this->input->post('support');
-        $currency = $this->input->post('currency');
+        $currency = rtrim((string) $this->input->post('currency')) . ' ';
         $logo = $this->input->post('logo');
         $twitter_username = $this->input->post('twitter_username');
 

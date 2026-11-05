@@ -485,6 +485,7 @@ class Home extends MX_Controller
             'Asia/Muscat' => "(GMT+04:00) Muscat",
             'Asia/Tbilisi' => "(GMT+04:00) Tbilisi",
             'Asia/Yerevan' => "(GMT+04:00) Yerevan",
+            'Africa/Tunis' => "(GMT+01:00) Tunis",
             'Asia/Kabul' => "(GMT+04:30) Kabul",
             'Asia/Karachi' => "(GMT+05:00) Karachi",
             'Asia/Tashkent' => "(GMT+05:00) Tashkent",

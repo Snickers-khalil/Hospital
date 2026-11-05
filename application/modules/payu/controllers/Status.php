@@ -395,7 +395,8 @@ class Status extends MX_Controller
                     'system_vendor' => 'MediCore',
                     'discount' => 'flat',
                     'sms_gateway' => 'Twilio',
-                    'currency' => '$',
+                    'currency' => 'TND ',
+                    'timezone' => 'Africa/Tunis',
                     'emailtype' => 'Smtp'
                 );
                 $this->settings_model->insertSettings($hospital_settings_data);

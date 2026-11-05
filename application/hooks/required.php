@@ -198,20 +198,20 @@ function required()
         if (!empty($hospital_id)) {
             $CI->db->where('hospital_id', $hospital_id);
             $settings_row = $CI->db->get('settings')->row();
-            $CI->timezone = !empty($settings_row) ? $settings_row->timezone : 'UTC';
+            $CI->timezone = !empty($settings_row) ? $settings_row->timezone : 'Africa/Tunis';
         } else {
-            $CI->timezone = 'UTC';
+            $CI->timezone = 'Africa/Tunis';
         }
     } else {
         $CI->db->where('hospital_id', 'superadmin');
         $settings_row = $CI->db->get('settings')->row();
-        $CI->timezone = !empty($settings_row) ? $settings_row->timezone : 'UTC';
+        $CI->timezone = !empty($settings_row) ? $settings_row->timezone : 'Africa/Tunis';
     }
     $timezone = $CI->timezone;
     if (!empty($timezone)) {
         date_default_timezone_set($timezone);
     } else {
-        date_default_timezone_set('UTC');
+        date_default_timezone_set('Africa/Tunis');
     }
 
 

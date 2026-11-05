@@ -85,7 +85,7 @@ class Settings extends MX_Controller
         $email = $this->input->post('email');
         $address = $this->input->post('address');
         $phone = $this->input->post('phone');
-        $currency = $this->input->post('currency');
+        $currency = rtrim((string) $this->input->post('currency')) . ' ';
         $logo = $this->input->post('logo');
         $footer_message = $this->input->post('footer_message');
         $codec_username = $this->input->post('codec_username');
@@ -1435,6 +1435,7 @@ function timeZone($timezone) {
             'Asia/Muscat' => "(GMT+04:00) Muscat",
             'Asia/Tbilisi' => "(GMT+04:00) Tbilisi",
             'Asia/Yerevan' => "(GMT+04:00) Yerevan",
+            'Africa/Tunis' => "(GMT+01:00) Tunis",
             'Asia/Kabul' => "(GMT+04:30) Kabul",
             'Asia/Karachi' => "(GMT+05:00) Karachi",
             'Asia/Tashkent' => "(GMT+05:00) Tashkent",

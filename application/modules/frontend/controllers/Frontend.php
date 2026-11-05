@@ -557,7 +557,7 @@ class Frontend extends MX_Controller
         $phone = $this->input->post('phone');
         $emergency = $this->input->post('emergency');
         $support = $this->input->post('support');
-        $currency = $this->input->post('currency');
+        $currency = rtrim((string) $this->input->post('currency')) . ' ';
         $logo = $this->input->post('logo');
         $block_1_text_under_title = $this->input->post('block_1_text_under_title');
         $service_block_text_under_title = $this->input->post('service_block__text_under_title');
@@ -1797,7 +1797,8 @@ class Frontend extends MX_Controller
                 'system_vendor' => 'MediCore',
                 'discount' => 'flat',
                 'sms_gateway' => 'Twilio',
-                'currency' => '$',
+                'currency' => 'TND ',
+                'timezone' => 'Africa/Tunis',
                 'emailtype' => 'Smtp',
                 'footer_message' => 'By' . $name,
                 'show_odontogram_in_history' => 'yes',
