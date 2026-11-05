@@ -33,6 +33,7 @@ $title = explode(' ', $settings->title);
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/country-select-js@2.1.0/build/css/countrySelect.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="<?php echo base_url('common/toastr/toastr.css'); ?>" />
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -188,7 +189,9 @@ $title = explode(' ', $settings->title);
                 <div class="hidden md:flex items-center space-x-4 lg:space-x-5 text-sm">
                     <a href="#home" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium">Home</a>
                     <a href="#features" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"><?php echo lang('service'); ?></a>
+<?php if (payments_enabled()) { ?>
                     <a href="#package" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"><?php echo lang('package'); ?></a>
+<?php } ?>
                     <a href="#review" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"><?php echo lang('review'); ?></a>
                     <a href="#contact" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"><?php echo lang('contact'); ?></a>
 
@@ -208,9 +211,11 @@ $title = explode(' ', $settings->title);
                         </a>
                     <?php } ?>
 
+<?php if (payments_enabled()) { ?>
                     <a href="#register" class="inline-flex items-center px-4 py-1.5 bg-primary-600 text-white text-sm font-medium rounded-md hover:bg-primary-700 transition duration-300 shadow-sm">
                         <?php echo lang('register_hospital'); ?>
                     </a>
+<?php } ?>
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -229,7 +234,9 @@ $title = explode(' ', $settings->title);
             <div class="px-4 space-y-3">
                 <a href="#home" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 rounded-lg transition-colors">Home</a>
                 <a href="#features" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 rounded-lg transition-colors"><?php echo lang('service'); ?></a>
+<?php if (payments_enabled()) { ?>
                 <a href="#package" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 rounded-lg transition-colors"><?php echo lang('package'); ?></a>
+<?php } ?>
                 <a href="#review" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 rounded-lg transition-colors"><?php echo lang('review'); ?></a>
                 <a href="#contact" class="block px-4 py-2 text-gray-700 hover:bg-primary-50 rounded-lg transition-colors"><?php echo lang('contact'); ?></a>
                 
@@ -249,9 +256,11 @@ $title = explode(' ', $settings->title);
                     </a>
                 <?php } ?>
 
+<?php if (payments_enabled()) { ?>
                 <a href="#register" class="block px-4 py-2 text-white bg-primary-600 hover:bg-primary-700 rounded-lg transition-colors font-medium">
                     <?php echo lang('register_hospital'); ?>
                 </a>
+<?php } ?>
             </div>
         </div>
     </nav>
@@ -290,18 +299,22 @@ $title = explode(' ', $settings->title);
                         Streamline your healthcare facility with our comprehensive hospital management system. Efficient, secure, and user-friendly.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mb-8">
+<?php if (payments_enabled()) { ?>
                         <a href="#register" class="group inline-flex items-center justify-center px-5 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-all duration-300 text-sm sm:text-base font-semibold">
                             <span><?php echo lang('start_your_free_trial'); ?></span>
                             <svg class="w-5 h-5 ml-2 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                             </svg>
                         </a>
+<?php } ?>
+<?php if (payments_enabled()) { ?>
                         <a href="#package" class="group inline-flex items-center justify-center px-5 py-2.5 bg-white text-gray-900 rounded-lg hover:bg-gray-50 transition-all duration-300 border border-gray-200 text-sm sm:text-base font-semibold">
                             <span><?php echo lang('view_pricing'); ?></span>
                             <svg class="w-5 h-5 ml-2 transform transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                             </svg>
                         </a>
+<?php } ?>
                     </div>
 
                     <!-- Stats Section -->
@@ -613,6 +626,7 @@ $title = explode(' ', $settings->title);
         display: none;
     }
 </style>
+<?php if (payments_enabled()) { ?>
     <!-- Pricing Section -->
     <section class="relative py-12 sm:py-16 bg-gradient-to-b from-white to-gray-50" id="package">
         <!-- Background Elements -->
@@ -739,7 +753,7 @@ $title = explode(' ', $settings->title);
 
             <!-- Registration Form -->
             <div class="max-w-4xl mx-auto">
-                <div class="bg-white/10 backdrop-blur-lg rounded-xl overflow-hidden shadow-xl">
+                <div class="bg-white/10 backdrop-blur-lg rounded-xl overflow-visible shadow-xl relative z-20">
                     <div class="p-4 sm:p-5 bg-gradient-to-r from-indigo-600/20 to-purple-600/20 border-b border-white/10">
                         <h3 class="text-lg font-bold text-white mb-1">
               <?php echo lang('subscribe'); ?>
@@ -763,7 +777,7 @@ $title = explode(' ', $settings->title);
                             <input type="text" name="phone" placeholder="<?php echo lang('Hospital Phone'); ?>*"
                                    class="w-full px-3 py-2 text-sm bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
 
-              <div class="package_select_div">
+              <div class="package_select_div relative z-30">
                                 <select name="package" id="package_select" 
                                         class="w-full px-3 py-2 text-sm bg-white/5 border border-white/10 rounded-lg text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
                                     <option class="bg-gray-900 text-white"><?php echo lang('select'); ?> <?php echo lang('package'); ?></option>
@@ -775,7 +789,7 @@ $title = explode(' ', $settings->title);
                 </select>
               </div>
 
-              <div class="package_duration_div">
+              <div class="package_duration_div relative z-30">
                                 <select name="package_duration" id="package_duration"
                                         class="w-full px-3 py-2 text-sm bg-white/5 border border-white/10 rounded-lg text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
                                     <option class="bg-gray-900 text-white" value="monthly"><?php echo lang('monthly'); ?></option>
@@ -784,7 +798,7 @@ $title = explode(' ', $settings->title);
               </div>
 
                             <select name="language"
-                                    class="w-full px-3 py-2 text-sm bg-white/5 border border-white/10 rounded-lg text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                    class="w-full px-3 py-2 text-sm bg-white/5 border border-white/10 rounded-lg text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 relative z-30">
                                 <option class="bg-gray-900 text-white"><?php echo lang('select'); ?> <?php echo lang('language'); ?></option>
                                 <option class="bg-gray-900 text-white" value="arabic"><?php echo lang('arabic'); ?></option>
                                 <option class="bg-gray-900 text-white" value="english"><?php echo lang('english'); ?></option>
@@ -800,7 +814,7 @@ $title = explode(' ', $settings->title);
                                    <input type="text" name="username" id="username" placeholder="<?php echo lang('frontend_website_link'); ?>*"
                                    class="w-full px-3 py-2 text-sm bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
                                    
-                            <input type="text" name="country" placeholder="<?php echo lang('Country'); ?>*"
+                            <input type="text" id="country" name="country" placeholder="<?php echo lang('Country'); ?>*"
                                    class="w-full px-3 py-2 text-sm bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
                                    <p id="web_link"></p>
                                 </div>
@@ -851,6 +865,7 @@ $title = explode(' ', $settings->title);
         </div>
       </div>
     </section>
+<?php } ?>
 
     <!-- Reviews Section -->
     <section class="relative py-12 sm:py-16 bg-gradient-to-b from-white to-gray-50" id="review">
@@ -1078,7 +1093,9 @@ $title = explode(' ', $settings->title);
                     <h4 class="text-base font-bold mb-3">Quick Links</h4>
                     <ul class="space-y-2 text-sm">
                         <li><a href="#features" class="text-gray-400 hover:text-white transition-colors duration-200"><?php echo lang('service'); ?></a></li>
+<?php if (payments_enabled()) { ?>
                         <li><a href="#package" class="text-gray-400 hover:text-white transition-colors duration-200"><?php echo lang('package'); ?></a></li>
+<?php } ?>
                         <li><a href="#review" class="text-gray-400 hover:text-white transition-colors duration-200"><?php echo lang('review'); ?></a></li>
                         <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors duration-200"><?php echo lang('contact'); ?></a></li>
                     </ul>
@@ -1294,19 +1311,6 @@ $title = explode(' ', $settings->title);
             // togglePricing(true);
         });
 
-        // Style all select dropdowns
-        document.querySelectorAll('select').forEach(select => {
-            select.addEventListener('mousedown', (e) => {
-                e.preventDefault();
-                const select = e.target;
-                const scroll = select.scrollTop;
-                e.target.blur();
-                setTimeout(() => {
-                    select.focus();
-                    select.scrollTop = scroll;
-                }, 0);
-            });
-        });
 </script>
    <script>
 function toggleChild(element) {
@@ -1393,6 +1397,22 @@ function switchPlan(plan) {
                     });
                 }
             });
+            // Attach reCAPTCHA v3 to frontend hospital registration form
+            grecaptcha.ready(function() {
+                var hospitalForm = document.getElementById('addNewHospital');
+                if (hospitalForm) {
+                    hospitalForm.addEventListener('submit', function(event) {
+                        event.preventDefault();
+                        var form = this;
+                        grecaptcha.execute('<?php echo $googleReCaptchaSiteKey; ?>', { action: 'submit' })
+                            .then(function(token) {
+                                var respEl = document.getElementById('recaptchaResponse');
+                                if (respEl) respEl.value = token;
+                                form.submit();
+                            });
+                    });
+                }
+            });
         </script>
             <script>
   $(document).ready(function() {
@@ -1401,12 +1421,16 @@ function switchPlan(plan) {
 
     // Function to update the web link
     function updateWebLink() {
-        const val = $("#username").val();
-       
-            const url = base_url + 'site/' + val;
-            const final_url = '<a style="color:#0cb8b6;" target="_blank" href="' + url + '">' + url + '</a>';
-            $("#web_link").html(final_url);
-      
+        const val = $("#username").val().trim();
+
+        if (!val) {
+            $("#web_link").html("");
+            return;
+        }
+
+        const url = base_url + 'site/' + val;
+        const final_url = '<a style="color:#0cb8b6;" target="_blank" href="' + url + '">' + url + '</a>';
+        $("#web_link").html(final_url);
     }
 
     // Initial update on page load
@@ -1441,7 +1465,68 @@ function switchPlan(plan) {
     
 
     </script>
-    
+    <script src="<?php echo base_url('common/toastr/toastr.js'); ?>"></script>
+    <?php if (!empty($hospital_message)) { ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var message = <?php echo json_encode($hospital_message); ?>;
+            var toastType = 'info';
+            var toastMessage = message;
+            var toastTitle = 'Notification';
+
+            switch (message) {
+                case 'failed':
+                    toastType = 'error';
+                    toastTitle = 'Error';
+                    toastMessage = 'Hospital could not be created. Please check your data and try again.';
+                    break;
+                case 'new_hospital_created':
+                    toastType = 'success';
+                    toastTitle = 'Success';
+                    toastMessage = 'Hospital created successfully.';
+                    break;
+                case 'this_email_address_is_already_registered':
+                    toastType = 'warning';
+                    toastTitle = 'Warning';
+                    toastMessage = 'This email address is already registered.';
+                    break;
+                case 'Please_check_card_details':
+                    toastType = 'warning';
+                    toastTitle = 'Warning';
+                    toastMessage = 'Please check your card details and try again.';
+                    break;
+            }
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+
+            toastr[toastType](toastMessage, toastTitle);
+        });
+    </script>
+    <?php } ?>
+    <?php if ($this->session->flashdata('hospital_error')) { ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var err = <?php echo json_encode($this->session->flashdata('hospital_error')); ?>;
+            toastr.error('Debug: ' + err, 'Registration Failed');
+        });
+    </script>
+    <?php } ?>
     <!--<script src="https://webagent-generator.vercel.app/api/embed?code=cc458d58-8cdf-44b4-bcc2-c6d3ff66e95d"></script>-->
 </body>
 </html>

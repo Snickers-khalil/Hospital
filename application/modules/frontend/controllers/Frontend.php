@@ -1745,11 +1745,44 @@ class Frontend extends MX_Controller
         } else {
 
 
-            $dfg = 11;
-            $this->ion_auth->register($username, $password, $email, $dfg);
-            $ion_user_id = $this->db->get_where('users', array('email' => $email))->row()->id;
+                // generate a stronger random password to satisfy ion_auth config
+                $password = substr(md5(uniqid(mt_rand(), true)), 0, 12);
+
+                // register user via Ion Auth and capture result/errors
+                $register = $this->ion_auth->register($username, $password, $email, array(), array());
+                if ($register === false) {
+                    $ion_err = method_exists($this->ion_auth, 'errors') ? $this->ion_auth->errors() : 'ion_auth_register_failed';
+                    log_message('error', 'Frontend::addNewhospital - ion_auth register failed for email: ' . $email . ' error: ' . $ion_err);
+                        // fallback debug file
+                        @file_put_contents(APPPATH . 'logs/hospital_debug.log', date('c') . " - ion_auth_register_failed: $email - $ion_err\n", FILE_APPEND);
+                    $this->session->set_flashdata('hospital_error', 'user_register_failed: ' . strip_tags($ion_err));
+                    redirect('frontend?hospital_message=failed#register');
+                    return;
+                }
+                // Ion Auth returns the new user id on success
+                $ion_user_id = is_numeric($register) ? $register : $this->db->get_where('users', array('email' => $email))->row()->id;
+                if (empty($ion_user_id)) {
+                    log_message('error', 'Frontend::addNewhospital - ion_auth register returned no user id for email: ' . $email);
+                    $this->session->set_flashdata('hospital_error', 'user_register_no_id');
+                    redirect('frontend?hospital_message=failed#register');
+                    return;
+                }
             $this->hospital_model->insertHospital($data);
-            $hospital_user_id = $this->db->get_where('hospital', array('email' => $email))->row()->id;
+            // retrieve insert id
+            $hospital_user_id = $this->db->insert_id();
+            if (empty($hospital_user_id)) {
+                $dberr = '';
+                if (method_exists($this->db, 'error')) {
+                    $err = $this->db->error();
+                    $dberr = isset($err['message']) ? $err['message'] : json_encode($err);
+                }
+                log_message('error', 'Frontend::addNewhospital - hospital insert failed for email: ' . $email . ' DB error: ' . $dberr);
+                    // fallback debug file
+                    @file_put_contents(APPPATH . 'logs/hospital_debug.log', date('c') . " - hospital_insert_failed: $email - $dberr\n", FILE_APPEND);
+                $this->session->set_flashdata('hospital_error', 'hospital_insert_failed: ' . $dberr);
+                redirect('frontend?hospital_message=failed#register');
+                return;
+            }
             $id_info = array('ion_user_id' => $ion_user_id);
             $this->hospital_model->updateHospital($hospital_user_id, $id_info);
 
@@ -1761,7 +1794,7 @@ class Frontend extends MX_Controller
                 'address' => $address,
                 'phone' => $phone,
                 'language' => $language,
-                'system_vendor' => 'Code Aristos - Hospital management System',
+                'system_vendor' => 'MediCore',
                 'discount' => 'flat',
                 'sms_gateway' => 'Twilio',
                 'currency' => '$',
