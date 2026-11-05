@@ -2426,9 +2426,5 @@ $lang['Treatment Plans'] = 'Tedavi Planları';
 $lang['Dental Reports'] = 'Diş Raporları';
 $lang['overdue'] = 'Gecikmiş';
 $lang['scheduled_date'] = 'Planlanan Tarih';
-
-
-
-
-
-
+$lang['patient_limit'] = 'Hasta limiti';
+$lang['doctor_limit'] = 'Doktor limiti';

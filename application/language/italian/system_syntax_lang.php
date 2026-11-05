@@ -2716,13 +2716,5 @@ $lang['describe_symptoms_detail'] = 'Describe the symptoms in detail...';
 $lang['medicine_suppliers'] = 'Fornitori di Medicinali';
 $lang['medicine_batches'] = 'Lotti di Medicinali';
 $lang['expiring_medicines'] = 'Medicinali in Scadenza';
-
-
-
-
-
-
-
-
-
-
+$lang['patient_limit'] = 'Limite pazienti';
+$lang['doctor_limit'] = 'Limite medici';

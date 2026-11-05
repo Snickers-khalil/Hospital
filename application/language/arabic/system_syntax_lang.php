@@ -2482,4 +2482,5 @@ $lang['Treatment Plans'] = 'خطط العلاج';
 $lang['Dental Reports'] = 'تقارير الأسنان';
 $lang['overdue'] = 'متأخر';
 $lang['scheduled_date'] = 'التاريخ المجدول';
-
+$lang['patient_limit'] = 'حد المرضى';
+$lang['doctor_limit'] = 'حد الأطباء';

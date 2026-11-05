@@ -28,7 +28,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title"><?php echo lang('All the department names and related informations'); ?></h3>
+                            <h3 class="card-title"><?php echo count($packages) . ' ' . lang('packages'); ?></h3>
                             <div class="float-right">
                                 <a href="hospital/package/addNewView">
                                     <button id="" class="btn btn-success btn-sm">
@@ -42,9 +42,9 @@
                             <table class="table table-bordered table-hover" id="editable-sample">
                                 <thead>
                                     <tr>
-                                        <th> <?php echo lang('package'); ?> <?php echo lang('name'); ?></th>
-                                        <th> <?php echo lang('patient'); ?> <?php echo lang('limit'); ?></th>
-                                        <th> <?php echo lang('doctor'); ?> <?php echo lang('limit'); ?></th>
+                                        <th> <?php echo lang('name'); ?></th>
+                                        <th> <?php echo lang('patient_limit'); ?></th>
+                                        <th> <?php echo lang('doctor_limit'); ?></th>
                                         <th> <?php echo lang('permitted_modules'); ?></th>
                                         <th> <?php echo lang('restricted_modules'); ?></th>
                                         <th> <?php echo lang('monthly_price'); ?></th>
@@ -60,34 +60,34 @@
                                     foreach ($packages as $package) {
                                     ?>
                                         <tr class="">
-                                            <td> <?php echo $package->name; ?></td>
-                                            <td><?php echo $package->p_limit; ?></td>
-                                            <td class="center"><?php echo $package->d_limit; ?></td>
-                                            <td class="center td_style"><?php
-                                                                        $modules = explode(',', $package->module);
-                                                                        foreach ($modules as $key => $value) {
-                                                                            echo $value . '<br>';
-                                                                        }
-                                                                        ?></td>
-                                            <td class="center td_style">
-                                                <?php
-                                                $all_modules = array('accountant', 'appointment', 'lab', 'bed', 'department', 'doctor', 'donor', 'finance', 'pharmacy', 'laboratorist', 'medicine', 'nurse', 'patient', 'pharmacist', 'prescription', 'receptionist', 'report', 'sms', 'notice', 'email');
-                                                $restricted_modules = array_diff($all_modules, $modules, hidden_modules());
-                                                foreach ($restricted_modules as $key1 => $value1) {
-                                                    echo $value1 . '<br>';
-                                                }
-                                                ?>
+                                            <?php
+                                            $modules = array_diff(explode(',', $package->module), hidden_modules());
+                                            $all_modules = array('accountant', 'appointment', 'lab', 'bed', 'department', 'doctor', 'donor', 'finance', 'pharmacy', 'laboratorist', 'medicine', 'nurse', 'patient', 'pharmacist', 'prescription', 'receptionist', 'report', 'sms', 'notice', 'email');
+                                            $restricted_modules = array_diff($all_modules, $modules, hidden_modules());
+                                            ?>
+                                            <td class="mc-strong"><?php echo $package->name; ?></td>
+                                            <td class="mc-num"><?php echo number_format((float) $package->p_limit); ?></td>
+                                            <td class="mc-num"><?php echo number_format((float) $package->d_limit); ?></td>
+                                            <td>
+                                                <div class="mc-chips">
+                                                    <?php foreach ($modules as $module_name) { ?>
+                                                        <span class="mc-chip"><?php echo lang($module_name) ?: ucfirst($module_name); ?></span>
+                                                    <?php } ?>
+                                                </div>
                                             </td>
-                                            <td class="center td_style">
-                                                <?php
-                                                echo $settings->currency . ' ' . $package->monthly_price;
-                                                ?>
+                                            <td>
+                                                <?php if (empty($restricted_modules)) { ?>
+                                                    <span class="mc-empty">&mdash;</span>
+                                                <?php } else { ?>
+                                                    <div class="mc-chips">
+                                                        <?php foreach ($restricted_modules as $module_name) { ?>
+                                                            <span class="mc-chip mc-chip-muted"><?php echo lang($module_name) ?: ucfirst($module_name); ?></span>
+                                                        <?php } ?>
+                                                    </div>
+                                                <?php } ?>
                                             </td>
-                                            <td class="center td_style">
-                                                <?php
-                                                echo $settings->currency . ' ' . $package->yearly_price;
-                                                ?>
-                                            </td>
+                                            <td class="mc-num"><?php echo $settings->currency . ' ' . number_format((float) $package->monthly_price); ?></td>
+                                            <td class="mc-num"><?php echo $settings->currency . ' ' . number_format((float) $package->yearly_price); ?></td>
                                             <td class="no-print d-flex gap-1">
                                                 <a type="button" class="btn btn-primary btn-sm btn_width" data-toggle="" href="hospital/package/editPackage?id=<?php echo $package->id; ?>" data-id="<?php echo $package->id; ?>"><i class="fa fa-edit"></i></a>
                                                 <a class="btn btn-danger btn-sm btn_width delete_button" href="hospital/package/delete?id=<?php echo $package->id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash"></i></a>

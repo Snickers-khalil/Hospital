@@ -70,6 +70,7 @@
   <link rel="stylesheet" href="adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
   <link rel="stylesheet" href="adminlte/dist/css/changes.css?v=dt-compact">
+  <link rel="stylesheet" href="common/css/medicore-tables.css?v=4">
 
   <link rel="stylesheet" href="adminlte/plugins/daterangepicker/daterangepicker.css">
   <link rel="stylesheet" href="adminlte/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">

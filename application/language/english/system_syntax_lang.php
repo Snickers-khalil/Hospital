@@ -2554,3 +2554,5 @@ $lang['severity'] = 'Severity';
 $lang['next_appointment'] = 'Next Appointment';
 $lang['edit_tooth'] = 'Edit Tooth';
 $lang['multi_select_mode'] = 'Multi-select mode';
+$lang['patient_limit'] = 'Patient limit';
+$lang['doctor_limit'] = 'Doctor limit';

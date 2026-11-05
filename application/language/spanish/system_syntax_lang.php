@@ -2446,8 +2446,5 @@ $lang['Treatment Plans'] = 'Planes de tratamiento';
 $lang['Dental Reports'] = 'Informes dentales';
 $lang['overdue'] = 'Atrasado';
 $lang['scheduled_date'] = 'Fecha programada';
-
-
-
-
-
+$lang['patient_limit'] = 'Límite de pacientes';
+$lang['doctor_limit'] = 'Límite de médicos';
