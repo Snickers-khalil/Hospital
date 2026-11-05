@@ -203,7 +203,7 @@ class Request extends MX_Controller {
                 'address' => $address,
                 'phone' => $phone,
                 'language' => $language,
-                'system_vendor' => 'Code Aristos | Hospital management System',
+                'system_vendor' => 'MediCore',
                 'sms_gateway' => 'Twilio',
                 'discount' => 'flat',
                 'currency' => '$',
