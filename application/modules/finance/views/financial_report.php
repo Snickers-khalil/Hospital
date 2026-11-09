@@ -395,6 +395,7 @@
                                     <section></section>
 
 
+<?php if (role_can_open('finance', 'expense')) { ?>
                                     <section class="card">
                                         <header class="card-header">
                                             <h4> <?php echo lang('expense'); ?> </h4>
@@ -437,6 +438,7 @@
                                             </tbody>
                                         </table>
                                     </section>
+<?php } ?>
                                 </div>
 
                                 <div class="col-lg-5">
@@ -525,6 +527,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+<?php if (role_can_open('finance', 'expense')) { ?>
                                                 <div class="col-md-6">
                                                     <div class="info-box">
                                                         <span class="info-box-icon bg-danger"><i class="fas fa-money-bill-wave"></i></span>
@@ -534,6 +537,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+<?php } ?>
                                             </div>
                                         </div>
                                     </section>

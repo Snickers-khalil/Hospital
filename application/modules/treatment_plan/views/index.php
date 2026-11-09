@@ -464,6 +464,7 @@
     </div>
 </div>
 
+<?php ob_start(); // Printed by home/footer, after jQuery has loaded. ?>
 <script>
 let currentTreatmentId = null;
 
@@ -912,7 +913,7 @@ $(document).ready(function() {
                     // Get patient and doctor information
                     const selectedPatient = $('#patientSelect option:selected').text();
                     const patientId = $('#patientSelect').val();
-                    const selectedDoctor = $('#doctorSelect option:selected').text();
+                    const selectedDoctor = $('#doctorSelect option:selected').text().trim().replace(/^Dr\.?\s*/i, '').replace(/\s*-\s*$/, '');
                     
                     // Create modern prescription HTML
                     const prescriptionHTML = `
@@ -1231,6 +1232,7 @@ function showNotification(message, type) {
     alert(message);
 }
 </script>
+<?php $GLOBALS['page_scripts'] = ($GLOBALS['page_scripts'] ?? '') . ob_get_clean(); ?>
 
 <style>
 .nav-tabs .nav-link {

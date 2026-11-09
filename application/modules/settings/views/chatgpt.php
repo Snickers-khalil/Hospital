@@ -31,7 +31,7 @@
                             <?php echo validation_errors(); ?>
                             <form role="form" action="settings/chatgptSettings" class="clearfix" method="post" enctype="multipart/form-data">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1"> OpenAI API Key </label>
+                                    <label for="exampleInputEmail1"> Gemini API Key </label>
 
                                     <input type="text" class="form-control form-control-lg" name="api_key" id="exampleInputEmail1" value='<?php
                                                                                                                                             if (!empty($settings->chatgpt_api_key)) {
@@ -53,8 +53,8 @@
                                     <button type="submit" name="submit" class="btn btn-info float-right"><?php echo lang('submit'); ?></button>
                                 </div>
                                 <code class="mt-5">
-                                    <?php echo lang('login_to_openai_com_and_then_go_to_this_page'); ?>
-                                    <a target="_blank" href="https://platform.openai.com/api-keys">https://platform.openai.com/api-keys</a>
+                                    <?php echo lang('login_to_google_ai_studio_and_then_go_to_this_page'); ?>
+                                    <a target="_blank" href="https://aistudio.google.com/apikey">https://aistudio.google.com/apikey</a>
                                 </code>
 
                             </form>

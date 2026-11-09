@@ -186,10 +186,16 @@ function role_link_rules()
         }
     }
 
+    $blocked = $rules['blocked'];
+    if (!role_can_open('pharmacy', 'payment')) {
+        $blocked[] = 'finance/pharmacy';
+    }
+
     return array(
         'hidden' => $hidden,
         'pages' => $rules['pages'],
-        'blocked' => array_merge($rules['blocked'], array('finance/pharmacy')),
+        'blocked' => $blocked,
+        'readonly' => isset($rules['readonly']) ? $rules['readonly'] : array(),
         'hiddenModules' => hidden_modules(),
     );
 }

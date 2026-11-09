@@ -420,7 +420,7 @@
                                             </div>
                                         <?php } ?>
 
-                                        <?php if (in_array('prescription', $this->modules)) { ?>
+                                        <?php if (in_array('prescription', $this->modules) && role_can_open('finance', 'expense')) { ?>
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="card stat-card h-100 shadow-sm custom-rounded text-center">
                                                     <a href="finance/expense">
@@ -455,7 +455,7 @@
                                                 <div class="col-lg-12 col-sm-12">
                                                     <div class="card card-custom shadow-sm custom-rounded mx-0 m-1">
                                                         <div class="card-body">
-                                                            <h5 class="border-bottom pb-2 py-1 mb-2 text-sm fw-bold"><?php echo lang('sales_vs_expenses') ?> <span class="text-xs badge badge-secondary ml-2 px-2 py-1"><?php echo lang('this_year') ?></span></h5>
+                                                            <h5 class="border-bottom pb-2 py-1 mb-2 text-sm fw-bold"><?php echo lang(role_can_open('finance', 'expense') ? 'sales_vs_expenses' : 'sales') ?> <span class="text-xs badge badge-secondary ml-2 px-2 py-1"><?php echo lang('this_year') ?></span></h5>
                                                             <div id="sales_expense_chart" style="width: 100%; height: 220px;"></div>
                                                             <script type="text/javascript">
                                                                 google.charts.load('current', {
@@ -532,6 +532,7 @@
 
                                                                     };
 
+                                                                    <?php if (!role_can_open('finance', 'expense')) { ?>data.removeColumn(2);<?php } ?>
                                                                     var chart = new google.visualization.ComboChart(document.getElementById('sales_expense_chart'));
                                                                     chart.draw(data, options);
                                                                 }
@@ -582,7 +583,7 @@
                                     <?php } ?>
 
 
-                                    <?php if ($this->ion_auth->in_group(array('admin'))) { ?>
+                                    <?php if ($this->ion_auth->in_group(array('admin')) && role_can_open('logs')) { ?>
                                         <div class="row logs-row">
                                             <div class="col-md-12">
                                                 <div class="card card-custom shadow-sm custom-rounded m-1">
@@ -1482,7 +1483,7 @@
 <?php } ?>
                                 </div>
                                 <div class="row text-center">
-<?php if (payments_enabled()) { ?>
+<?php if (payments_enabled() && role_can_open('finance', 'expense')) { ?>
                                     <div class="col-6 mb-3">
                                         <div class="stat-card bg-light p-3 ml-3 border rounded">
                                             <i class="fas fa-money-bill-wave bg-warning fa-lg p-2 rounded-circle"></i>
@@ -1543,7 +1544,7 @@
 <?php } ?>
                                 </div>
                                 <div class="row text-center">
-<?php if (payments_enabled()) { ?>
+<?php if (payments_enabled() && role_can_open('finance', 'expense')) { ?>
                                     <div class="col-6 mb-3">
                                         <div class="stat-card bg-light p-3 ml-3 border rounded">
                                             <i class="fas fa-money-bill-wave bg-warning fa-lg p-2 rounded-circle"></i>
@@ -1604,7 +1605,7 @@
 <?php } ?>
                                 </div>
                                 <div class="row text-center">
-<?php if (payments_enabled()) { ?>
+<?php if (payments_enabled() && role_can_open('finance', 'expense')) { ?>
                                     <div class="col-6 mb-3">
                                         <div class="stat-card bg-light p-3 ml-3 border rounded">
                                             <i class="fas fa-money-bill-wave bg-warning fa-lg p-2 rounded-circle"></i>

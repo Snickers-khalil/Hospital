@@ -83,3 +83,16 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+/*
+|--------------------------------------------------------------------------
+| AI provider
+|--------------------------------------------------------------------------
+| All AI features use Gemini through its OpenAI-compatible endpoint. The key
+| is the one saved in Settings (settings.chatgpt_api_key).
+*/
+defined('AI_API_URL') OR define('AI_API_URL', 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions');
+defined('AI_MODEL')   OR define('AI_MODEL', 'gemini-3.6-flash');
+defined('AI_FALLBACK_MODEL') OR define('AI_FALLBACK_MODEL', 'gemini-3.5-flash-lite');
+defined('AI_FRENCH')  OR define('AI_FRENCH', "\n\nÉcris toute ta réponse en français, y compris les titres de section.");
+defined('AI_PLAIN_TEXT') OR define('AI_PLAIN_TEXT', " Écris en texte brut, sans Markdown : pas de #, pas de ** et pas de tableau. Garde les accents et les apostrophes du français.");

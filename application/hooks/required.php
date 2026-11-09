@@ -20,7 +20,7 @@ function payments_guard($CI, $RTR)
     }
 
     if (isset($CI->modules) && is_array($CI->modules)) {
-        $CI->modules = array_values(array_diff($CI->modules, array('pharmacy', 'pgateway')));
+        $CI->modules = array_values(array_diff($CI->modules, array('pgateway')));
     }
     if (isset($CI->super_modules) && is_array($CI->super_modules)) {
         $CI->super_modules = array_values(array_diff($CI->super_modules, array('pgateway')));
@@ -33,7 +33,7 @@ function payments_guard($CI, $RTR)
 
     $class = strtolower($RTR->class);
     $method = strtolower($RTR->method);
-    $blocked_classes = array('pharmacy', 'pgateway', 'paypal', 'paystack', 'payu', 'status');
+    $blocked_classes = array('pgateway', 'paypal', 'paystack', 'payu', 'status');
     $blocked_methods = array(
         'settings' => array('changeplan'),
         'frontend' => array('addnewhospitalpayment'),

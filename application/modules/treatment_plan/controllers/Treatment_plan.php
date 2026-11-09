@@ -293,10 +293,8 @@ class Treatment_plan extends MX_Controller
 
     private function callAIAPI($api_key, $prompt)
     {
-        $url = 'https://api.openai.com/v1/chat/completions';
-         
         $data = array(
-            'model' => 'gpt-4',
+            'model' => AI_MODEL,
             'messages' => array(
                 array(
                     'role' => 'system',
@@ -304,30 +302,16 @@ class Treatment_plan extends MX_Controller
                 ),
                 array(
                     'role' => 'user',
-                    'content' => $prompt
+                    'content' => $prompt . AI_FRENCH . AI_PLAIN_TEXT
                 )
             ),
             'max_tokens' => 3000,
             'temperature' => 0.0 
         );
         
-        $headers = array(
-            'Content-Type: application/json',
-            'Authorization: Bearer ' . $api_key
-        );
-        
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-        
-        $response = curl_exec($ch);
-        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
+        $request = ai_chat_request($api_key, $data);
+        $response = $request['response'];
+        $http_code = $request['http_code'];
         
         if ($http_code == 200) {
             $result = json_decode($response, true);

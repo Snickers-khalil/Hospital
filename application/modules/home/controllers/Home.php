@@ -23,55 +23,7 @@ class Home extends MX_Controller
 
         if (!$this->ion_auth->in_group(array('superadmin'))) {
 
-            $date = date('d-m-Y');
-            $clock_in = date('h:i A');
-            $clock_out = "";
-            $late = "";
-            $halfday = "";
-            $work_from = "";
-            $details = array();
-            $month = date('F', strtotime($date));
-            $year = date('Y', strtotime($date));
-            $day = explode('-', $date);
-
-            $result = $this->db->get_where('attendance', array('staff' => $this->ion_auth->user()->row()->id, 'month' => $month, 'year' => $year))->row();
-            if (!empty($result->details)) {
-                $details = explode('#', $result->details);
-
-                $detail = explode('_', $details[$day[0] - 1] ?? '');
-            }
-
-            $finalDetail = ($clock_in != '' ? $clock_in : 'NONE') . '_' . ($clock_out != '' ? $clock_out : 'NONE') . '_' . ($late == 'late' ? $late : 'NONE') . '_' . ($halfday == 'halfday' ? $halfday : 'NONE') . '_' . ($work_from == '' ? 'office' : $work_from);
-
-            $details[$day[0] - 1] = $finalDetail;
-
-            $detail = implode('#', $details);
-            if (!empty($result->log)) {
-                $logs = explode("_", $result->log);
-                $checkAdded = "";
-
-                if ($clock_in != '') {
-                    $checkAdded = $logs[$day[0] - 1] ?? '';
-                    $logs[$day[0] - 1] = 'yes';
-                }
-
-                $log = implode('_', $logs);
-            } else {
-                $log = '';
-                $checkAdded = '';
-            }
-
-
-            $data = array(
-                'log' => $log,
-                'details' => $detail
-            );
-            if (!empty($result->id)) {
-                if ($checkAdded != 'yes') {
-                    $this->db->where('id', $result->id);
-                    $this->db->update('attendance', $data);
-                }
-            }
+            // Attendance is no longer part of MediCore, so logging in does not clock the user in.
 
             $data['sum'] = $this->home_model->getSum('gross_total', 'payment');
             $data['payments'] = $this->finance_model->getPayment();

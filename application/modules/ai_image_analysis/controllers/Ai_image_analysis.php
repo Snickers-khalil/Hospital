@@ -123,7 +123,7 @@ class Ai_image_analysis extends MX_Controller
             return;
         }
 
-        // Analyze image directly using OpenAI Vision API
+        // Analyze image directly using Gemini Vision API
         $analysis_result = $this->analyzeImageDirectly($api_key, $_FILES['image'], $description);
 
         if ($analysis_result) {
@@ -176,8 +176,8 @@ class Ai_image_analysis extends MX_Controller
             return;
         }
 
-        // Analyze image using OpenAI Vision API
-        $analysis_result = $this->callOpenAIVisionAPI($api_key, $analysis);
+        // Analyze image using Gemini Vision API
+        $analysis_result = $this->callVisionAPI($api_key, $analysis);
 
         if ($analysis_result) {
             // Update database with analysis result
@@ -215,14 +215,14 @@ class Ai_image_analysis extends MX_Controller
         $prompt = $this->getAutoDetectionPrompt($description);
 
         $data = array(
-            'model' => 'gpt-4.1',
+            'model' => AI_MODEL,
             'messages' => array(
                 array(
                     'role' => 'user',
                     'content' => array(
                         array(
                             'type' => 'text',
-                            'text' => $prompt
+                            'text' => $prompt . AI_FRENCH
                         ),
                         array(
                             'type' => 'image_url',
@@ -237,19 +237,9 @@ class Ai_image_analysis extends MX_Controller
             'temperature' => 0.0 
         );
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://api.openai.com/v1/chat/completions');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json',
-            'Authorization: Bearer ' . $api_key
-        ));
-
-        $response = curl_exec($ch);
-        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
+        $request = ai_chat_request($api_key, $data);
+        $response = $request['response'];
+        $http_code = $request['http_code'];
 
         if ($http_code === 200) {
             $result = json_decode($response, true);
@@ -258,11 +248,11 @@ class Ai_image_analysis extends MX_Controller
             }
         }
 
-        log_message('error', 'OpenAI Vision API Error: ' . $response);
+        log_message('error', 'Gemini Vision API Error: ' . $response);
         return false;
     }
 
-    private function callOpenAIVisionAPI($api_key, $analysis)
+    private function callVisionAPI($api_key, $analysis)
     {
         $image_path = FCPATH . 'uploads/ai_image_analysis/' . $analysis->image_path;
         
@@ -274,24 +264,25 @@ class Ai_image_analysis extends MX_Controller
         // Encode image to base64
         $image_data = file_get_contents($image_path);
         $base64_image = base64_encode($image_data);
+        $mime_type = mime_content_type($image_path);
 
         // Prepare the prompt based on image type
         $prompt = $this->getAnalysisPrompt($analysis->image_type, $analysis->description);
 
         $data = array(
-            'model' => 'gpt-4.1',
+            'model' => AI_MODEL,
             'messages' => array(
                 array(
                     'role' => 'user',
                     'content' => array(
                         array(
                             'type' => 'text',
-                            'text' => $prompt
+                            'text' => $prompt . AI_FRENCH
                         ),
                         array(
                             'type' => 'image_url',
                             'image_url' => array(
-                                'url' => 'data:image/jpeg;base64,' . $base64_image
+                                'url' => 'data:' . $mime_type . ';base64,' . $base64_image
                             )
                         )
                     )
@@ -301,19 +292,9 @@ class Ai_image_analysis extends MX_Controller
             'temperature' => 0.0
         );
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://api.openai.com/v1/chat/completions');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json',
-            'Authorization: Bearer ' . $api_key
-        ));
-
-        $response = curl_exec($ch);
-        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
+        $request = ai_chat_request($api_key, $data);
+        $response = $request['response'];
+        $http_code = $request['http_code'];
 
         if ($http_code === 200) {
             $result = json_decode($response, true);
@@ -322,7 +303,7 @@ class Ai_image_analysis extends MX_Controller
             }
         }
 
-        log_message('error', 'OpenAI Vision API Error: ' . $response);
+        log_message('error', 'Gemini Vision API Error: ' . $response);
         return false;
     }
 

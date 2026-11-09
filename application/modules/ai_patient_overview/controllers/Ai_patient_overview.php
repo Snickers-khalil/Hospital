@@ -87,7 +87,7 @@ class Ai_patient_overview extends MX_Controller
             
         } catch (Exception $e) {
             log_message('error', 'AI Patient Overview Analysis Error: ' . $e->getMessage());
-            echo json_encode(['success' => false, 'message' => 'Error generating analysis: ' . $e->getMessage()]);
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         }
     }
 
@@ -98,46 +98,36 @@ class Ai_patient_overview extends MX_Controller
         $api_key = $settings->chatgpt_api_key ?? '';
         
         if (empty($api_key)) {
-            throw new Exception('OpenAI API key not configured');
+            throw new Exception('Gemini API key not configured');
         }
 
         // Prepare the comprehensive prompt
         $prompt = $this->prepareAnalysisPrompt($patient_data, $patient_id, $doctor_id);
         
         $data = array(
-            'model' => 'gpt-4.1',
+            'model' => AI_MODEL,
             'messages' => array( 
                 array(
                     'role' => 'user',
-                    'content' => $prompt
+                    'content' => $prompt . AI_FRENCH . AI_PLAIN_TEXT
                 )
             ),
             'max_tokens' => 4000,
             'temperature' => 0.0
         );
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://api.openai.com/v1/chat/completions');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json',
-            'Authorization: Bearer ' . $api_key
-        ));
-
-        $response = curl_exec($ch);
-        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
+        $request = ai_chat_request($api_key, $data);
+        $response = $request['response'];
+        $http_code = $request['http_code'];
 
         if ($http_code !== 200) {
-            throw new Exception('OpenAI API error: ' . $response);
+            throw new Exception(ai_error_message($http_code));
         }
 
         $result = json_decode($response, true);
         
         if (isset($result['error'])) {
-            throw new Exception('OpenAI API error: ' . $result['error']['message']);
+            throw new Exception('Gemini API error: ' . $result['error']['message']);
         }
 
         return $result['choices'][0]['message']['content'] ?? 'Analysis failed';

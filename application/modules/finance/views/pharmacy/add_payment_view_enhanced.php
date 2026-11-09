@@ -134,6 +134,18 @@
                                 <!-- Discount -->
                                 <div class="form-group mb-3">
                                     <label class="font-weight-bold text-dark mb-2">
+                                        <i class="fas fa-user mr-1"></i><?php echo lang('patient'); ?>
+                                    </label>
+                                    <select class="form-control" name="patient" id="salePatient" style="height: auto;">
+                                        <option value=""><?php echo lang('select_patient'); ?></option>
+                                        <?php foreach (($patients ?? array()) as $sale_patient) { ?>
+                                            <option value="<?php echo htmlspecialchars($sale_patient->name); ?>"><?php echo htmlspecialchars($sale_patient->name); ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label class="font-weight-bold text-dark mb-2">
                                         <i class="fas fa-percentage mr-1"></i>Discount
                                     </label>
                                     <input type="number" step="0.01" class="form-control" name="discount" 
@@ -731,7 +743,8 @@ function initializeEditMode() {
     <?php endif; ?>
 }
 
-$(document).ready(function() {
+// jQuery loads in the footer, after this script.
+document.addEventListener('DOMContentLoaded', function() {
     // Initialize edit mode if payment data exists
     <?php if (!empty($payment->id) && !empty($payment->category_name)): ?>
     initializeEditMode();

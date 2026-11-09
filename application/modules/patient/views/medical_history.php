@@ -58,7 +58,7 @@
                             <section class="">
                                 <section class="card-body">
                                     <div class="">
-<?php $show_clinical_tabs = role_can_open('symptom'); $show_record_tabs = $show_clinical_tabs || $this->ion_auth->in_group(array('Patient')); ?>
+<?php $show_clinical_tabs = role_can_open('symptom') || $this->ion_auth->in_group(array('Nurse')); $show_record_tabs = $show_clinical_tabs || $this->ion_auth->in_group(array('Patient', 'admin')); ?>
                                         <ul class="nav nav-tabs card-header-tabs mb-3 text-md">
                                             <li class="nav-item">
                                                 <a class="nav-link <?php echo ($redirect_tab == '') ? 'active' : ''; ?>"

@@ -385,7 +385,7 @@
 
 
 
-<?php if ($this->ion_auth->in_group(array('admin', 'Pharmacist'))) { ?>
+<?php if ($this->ion_auth->in_group(array('admin', 'Pharmacist', 'Nurse'))) { ?>
     <?php if (in_array('prescription', $this->modules)) { ?>
         <li class="nav-item">
             <a class="nav-link text-white" href="prescription/all">
@@ -511,6 +511,10 @@
         </li>
         <li class="nav-item"><a class="nav-link text-white" href="appointment/myTodays"><i class="text-secondary nav-icon fas fa-headphones"></i>
                 <p><?php echo lang('todays'); ?> <?php echo lang('appointment'); ?></p>
+            </a>
+        </li>
+        <li class="nav-item"><a class="nav-link text-white" href="appointment/requestView"><i class="text-secondary nav-icon fas fa-calendar-plus"></i>
+                <p><?php echo lang('request_a_appointment'); ?></p>
             </a>
         </li>
     <?php } ?>
@@ -716,14 +720,6 @@
 <?php } ?>
 
 <?php if ($this->ion_auth->in_group('Receptionist')) { ?>
-    <?php if (in_array('appointment', $this->modules)) { ?>
-        <li class="nav-item">
-            <a class="nav-link text-white" href="appointment/calendar">
-                <i class="text-secondary nav-icon far fa-calendar"></i>
-                <p> <?php echo lang('calendar'); ?> </p>
-            </a>
-        </li>
-    <?php } ?>
     <?php if (in_array('finance', $this->modules)) { ?>
         <li class="nav-item">
             <a class="nav-link text-white" href="#">
@@ -893,7 +889,7 @@ if ($this->ion_auth->in_group(array('Receptionist'))) {
     </li>
 <?php } ?>
 
-<?php if ($this->ion_auth->in_group(array('admin', 'Pharmacist'))) { ?>
+<?php if ($this->ion_auth->in_group(array('admin', 'Pharmacist', 'Accountant'))) { ?>
     <?php if (in_array('pharmacy', $this->modules)) { ?>
         <li class="nav-item">
             <a class="nav-link text-white" href="#">
@@ -1483,7 +1479,7 @@ if ($this->ion_auth->in_group(array('Receptionist'))) {
 
 
 
-<?php if ($this->ion_auth->in_group(array('Nurse', 'Receptionist'))) { ?>
+<?php if ($this->ion_auth->in_group(array('Nurse', 'Receptionist', 'Doctor'))) { ?>
     <?php if (in_array('bed', $this->modules)) { ?>
         <li class="nav-item">
             <a class="nav-link text-white" href="#">

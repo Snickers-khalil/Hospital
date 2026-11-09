@@ -108,6 +108,7 @@ class Pharmacy extends MX_Controller
         $data['discount_type'] = $this->pharmacy_model->getDiscountType();
         $data['settings'] = $this->settings_model->getSettings();
         $data['medicines'] = $this->medicine_model->getMedicine();
+        $data['patients'] = $this->getSalePatients();
         $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/add_payment_view_enhanced', $data);
         $this->load->view('home/footer');
@@ -120,9 +121,16 @@ class Pharmacy extends MX_Controller
     {
         $data = array();
         $data['settings'] = $this->settings_model->getSettings();
+        $data['patients'] = $this->getSalePatients();
         $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/add_payment_view_enhanced', $data);
         $this->load->view('home/footer');
+    }
+
+    private function getSalePatients()
+    {
+        $this->load->model('patient/patient_model');
+        return $this->patient_model->getPatient();
     }
 
     public function addPaymentViewDebug()

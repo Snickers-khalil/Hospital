@@ -412,6 +412,7 @@ if ($this->session->flashdata('success') || $this->session->flashdata('error') |
 
 <?php if ($this->config->item('payments_enabled') === false) { $this->load->view('home/hide_payments'); } ?>
 <?php $this->load->view('home/role_links'); ?>
+<?php echo $GLOBALS['page_scripts'] ?? ''; ?>
 </body>
 
 </html>

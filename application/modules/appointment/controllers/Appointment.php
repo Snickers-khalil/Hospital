@@ -150,6 +150,61 @@ class Appointment extends MX_Controller
         $this->load->view('home/footer');
     }
 
+    public function requestView()
+    {
+        if (!$this->ion_auth->in_group(array('Patient'))) {
+            redirect('home/permission');
+        }
+        $data['doctors'] = $this->doctor_model->getDoctor();
+        $data['settings'] = $this->settings_model->getSettings();
+        $this->load->view('home/dashboard', $data);
+        $this->load->view('request_appointment', $data);
+        $this->load->view('home/footer');
+    }
+
+    public function addRequest()
+    {
+        if (!$this->ion_auth->in_group(array('Patient'))) {
+            redirect('home/permission');
+        }
+
+        $patient = $this->db->get_where('patient', array(
+            'ion_user_id' => $this->ion_auth->get_user_id(),
+            'hospital_id' => $this->session->userdata('hospital_id'),
+        ))->row();
+        $doctor = $this->db->get_where('doctor', array(
+            'id' => $this->input->post('doctor'),
+            'hospital_id' => $this->session->userdata('hospital_id'),
+        ))->row();
+        $date = strtotime((string) $this->input->post('date'));
+
+        if (empty($patient) || empty($doctor) || empty($date) || $date < strtotime('today')) {
+            show_swal(lang('error'), 'error', lang('error'));
+            redirect('appointment/requestView');
+        }
+
+        $this->appointment_model->insertAppointment(array(
+            'patient' => $patient->id,
+            'patientname' => $patient->name,
+            'doctor' => $doctor->id,
+            'doctorname' => $doctor->name,
+            'date' => $date,
+            's_time' => 'Not Selected',
+            'e_time' => 'Not Selected',
+            'time_slot' => 'Not Selected',
+            'remarks' => $this->input->post('remarks', true),
+            'add_date' => date('m/d/y'),
+            'registration_time' => time(),
+            'status' => 'Requested',
+            'user' => '',
+            'request' => 'Yes',
+            'payment_status' => 'unpaid',
+        ));
+
+        show_swal(lang('request_sent_successfully'), 'success', lang('added'));
+        redirect('appointment/myAppointments');
+    }
+
     public function addNewViewQuick()
     {
 

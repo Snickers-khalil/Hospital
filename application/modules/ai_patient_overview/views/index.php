@@ -203,6 +203,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 </div>
 
+<?php ob_start(); // Printed by home/footer, after jQuery has loaded. ?>
 <script>
 let currentAnalysisId = null;
 
@@ -357,7 +358,7 @@ function generateOverview() {
 function displayOverviewResult(patientData, analysisResult, analysisData = null) {
     // Get the actual generation time from database or use current time as fallback
     let generatedTime = new Date();
-    let analysisId = 'N/A';
+    let analysisId = currentAnalysisId || 'N/A';
     
     if (analysisData) {
         // Use actual data from database
@@ -758,6 +759,7 @@ function showNotification(message, type) {
 }
 
 </script>
+<?php $GLOBALS['page_scripts'] = ($GLOBALS['page_scripts'] ?? '') . ob_get_clean(); ?>
 
 <style>
 .analysis-result {
@@ -806,7 +808,9 @@ function showNotification(message, type) {
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap4.min.css">
 
 <!-- DataTables JS -->
+<?php ob_start(); // Printed by home/footer, after jQuery has loaded. ?>
 <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.bootstrap4.min.js"></script> 
+<?php $GLOBALS['page_scripts'] = ($GLOBALS['page_scripts'] ?? '') . ob_get_clean(); ?>

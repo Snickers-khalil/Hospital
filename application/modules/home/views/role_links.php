@@ -6,6 +6,13 @@
         var rules = <?php echo json_encode($role_links); ?>;
         var base = new URL(document.baseURI).pathname.toLowerCase();
 
+        var currentClass = location.pathname.toLowerCase().slice(base.length).split('/')[0];
+        if (rules.readonly.indexOf(currentClass) !== -1) {
+            var style = document.createElement('style');
+            style.textContent = 'a[href="#myModal"].btn-primary, a.editbutton:not([href]) { display: none !important; }';
+            document.head.appendChild(style);
+        }
+
         function isHidden(link) {
             var url;
             try { url = new URL(link.href, document.baseURI); } catch (e) { return false; }
@@ -25,6 +32,20 @@
                 if ((link.getAttribute('href') || '').charAt(0) !== '#' && isHidden(link)) {
                     var item = link.closest('li');
                     (item && item.querySelectorAll('a').length === 1 ? item : link).remove();
+                }
+            });
+            // Hide forms the role may not submit, and the buttons that open them.
+            root.querySelectorAll('form[action]').forEach(function (form) {
+                var probe = document.createElement('a');
+                probe.href = form.getAttribute('action');
+                if (!isHidden(probe)) { return; }
+                var modal = form.closest('.modal');
+                if (modal && modal.id) {
+                    document.querySelectorAll('[href="#' + modal.id + '"], [data-target="#' + modal.id + '"]').forEach(function (button) {
+                        button.style.display = 'none';
+                    });
+                } else {
+                    form.style.display = 'none';
                 }
             });
             rules.hiddenModules.forEach(function (name) {

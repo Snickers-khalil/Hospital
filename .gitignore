@@ -1,5 +1,4 @@
 # Environment / secrets
-.env
 .env.local
 .env.*.local
 
@@ -11,8 +10,6 @@ Thumbs.db
 .vscode/
 
 # User uploads (keep folder structure)
-uploads/*
-!uploads/.gitkeep
 
 # Logs / cache
 application/logs/*
@@ -24,3 +21,7 @@ application/cache/*
 # Temp
 *.log
 *.tmp
+
+# Session files (keep folder)
+application/cache/sessions/*
+!application/cache/sessions/.gitkeep
