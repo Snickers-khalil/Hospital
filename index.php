@@ -236,17 +236,37 @@ define('FCPATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);
 if (file_exists(FCPATH . '.env')) {
     $lines = file(FCPATH . '.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     foreach ($lines as $line) {
-        if (strpos(trim($line), '#') === 0) continue;
+        $line = trim($line);
+        if ($line === '' || strpos($line, '#') === 0 || strpos($line, '=') === false) continue;
         list($name, $value) = explode('=', $line, 2);
         $name = trim($name);
-        $value = trim($value);
-        $value = trim($value, "\"'");
-        
+        $value = trim(trim($value), "\"'");
+
         if (!array_key_exists($name, $_SERVER) && !array_key_exists($name, $_ENV)) {
-            putenv(sprintf('%s=%s', $name, $value));
+            // putenv() is disabled on some shared hosts (e.g. InfinityFree)
+            if (function_exists('putenv')) {
+                @putenv(sprintf('%s=%s', $name, $value));
+            }
             $_ENV[$name] = $value;
             $_SERVER[$name] = $value;
         }
+    }
+}
+
+/*
+| Read a config value from the environment, $_ENV or $_SERVER.
+| Works even when putenv()/getenv() are disabled by the host.
+*/
+if (!function_exists('env_value')) {
+    function env_value($name)
+    {
+        $value = function_exists('getenv') ? getenv($name) : false;
+        if ($value === false || $value === '') {
+            if (isset($_ENV[$name]) && $_ENV[$name] !== '') return $_ENV[$name];
+            if (isset($_SERVER[$name]) && $_SERVER[$name] !== '') return $_SERVER[$name];
+            return false;
+        }
+        return $value;
     }
 }
 

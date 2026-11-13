@@ -25,3 +25,6 @@ application/cache/*
 # Session files (keep folder)
 application/cache/sessions/*
 !application/cache/sessions/.gitkeep
+
+# InfinityFree secrets
+deploy/infinityfree/env.production

@@ -86,17 +86,22 @@ if ($language == 'english') {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js"></script>
 
 
-<script src="adminlte/plugins/jquery/jquery.min.js"></script>
-<script src="adminlte/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- jQuery is loaded in the <head> (home/dashboard.php); load it here only if a page used another header -->
+<script>window.jQuery || document.write('<script src="adminlte/plugins/jquery/jquery.min.js"><\/script>');</script>
+<script>(window.jQuery && window.jQuery.ui) || document.write('<script src="adminlte/plugins/jquery-ui/jquery-ui.min.js"><\/script>');</script>
 
 
 <script src="common/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script src="common/assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
 
 
-<script src="common/assets/bootstrap-datepicker/locales/bootstrap-datepicker.<?php echo $langdate; ?>.min.js"></script>
+<?php foreach (array('.min.js', '.js') as $ext) { if (file_exists(FCPATH . 'common/assets/bootstrap-datepicker/locales/bootstrap-datepicker.' . $langdate . $ext)) { ?>
+<script src="common/assets/bootstrap-datepicker/locales/bootstrap-datepicker.<?php echo $langdate . $ext; ?>"></script>
+<?php break; } } ?>
 
-<script src="common/assets/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.<?php echo $langdate; ?>.min.js"></script>
+<?php foreach (array('.min.js', '.js') as $ext) { if (file_exists(FCPATH . 'common/assets/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.' . $langdate . $ext)) { ?>
+<script src="common/assets/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.<?php echo $langdate . $ext; ?>"></script>
+<?php break; } } ?>
 
 
 
@@ -149,6 +154,7 @@ if ($language == 'english') {
         "use strict";
 
         var calendarEl = document.getElementById('calendar');
+        if (!calendarEl) { return; }
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
             locale: "<?php echo $lang; ?>",
@@ -247,6 +253,7 @@ if ($language == 'english') {
 
     // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
     var previewNode = document.querySelector("#template")
+    if (previewNode) {
     previewNode.id = ""
     var previewTemplate = previewNode.parentNode.innerHTML
     previewNode.parentNode.removeChild(previewNode)
@@ -268,6 +275,7 @@ if ($language == 'english') {
             myDropzone.enqueueFile(file)
         }
     })
+    }
 </script>
 
 

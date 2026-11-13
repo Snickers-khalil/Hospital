@@ -23,13 +23,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
-
-    $ht = "https://";
-} else {
-	$ht = "http://";
-}
-$config['base_url'] = getenv('APP_URL') ?: (function() use ($ht) {
+// Detect https, also behind a proxy / load balancer (InfinityFree, Cloudflare...)
+$is_https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
+    || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443)
+    || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https')
+    || (isset($_SERVER['HTTP_CF_VISITOR']) && strpos($_SERVER['HTTP_CF_VISITOR'], 'https') !== false)
+    || (isset($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] === 'https');
+$ht = $is_https ? "https://" : "http://";
+$config['base_url'] = env_value('APP_URL') ?: (function() use ($ht) {
     $url = $ht.$_SERVER['HTTP_HOST'];
     $url .= preg_replace('@/+$@','',dirname($_SERVER['SCRIPT_NAME'])).'/';
     return $url;
@@ -335,7 +336,7 @@ $config['cache_query_string'] = false;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = getenv('APP_KEY') ?: '';
+$config['encryption_key'] = env_value('APP_KEY') ?: '';
 
 /*
 |--------------------------------------------------------------------------
@@ -391,10 +392,10 @@ $config['encryption_key'] = getenv('APP_KEY') ?: '';
 // MediCore: false hides all payment features and shows 'Coming soon'; true restores them.
 $config['payments_enabled'] = false;
 
-$config['sess_driver'] = getenv('SESSION_DRIVER') ?: 'files';
+$config['sess_driver'] = env_value('SESSION_DRIVER') ?: 'files';
 $config['sess_cookie_name'] = 'ci_session';
-$config['sess_expiration'] = getenv('SESSION_LIFETIME') ?: 7200;
-$config['sess_save_path'] = getenv('SESSION_SAVE_PATH') ?: APPPATH . 'cache/sessions';
+$config['sess_expiration'] = env_value('SESSION_LIFETIME') ?: 7200;
+$config['sess_save_path'] = env_value('SESSION_SAVE_PATH') ?: APPPATH . 'cache/sessions';
 $config['sess_match_ip'] = false;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = false;

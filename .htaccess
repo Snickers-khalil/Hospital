@@ -1,8 +1,24 @@
 RewriteEngine On
+
+# Block access to secrets, dumps and dev files
+RewriteRule (^|/)\.(env|git) - [F,L]
+<FilesMatch "^(\.env.*|composer\.(json|lock)|Jenkinsfile|sonar-project\.properties|test_.*\.php)$">
+    Require all denied
+</FilesMatch>
+<FilesMatch "\.(sql|log|md|bat|sh)$">
+    Require all denied
+</FilesMatch>
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?/$1 [L]
 
-php_value max_input_vars 20000
-php_value max_multipart_body_parts 20000
-
+# php_value is only allowed when PHP runs as an Apache module (XAMPP).
+# Shared hosts like InfinityFree run PHP as CGI and return a 500 error on it.
+<IfModule mod_php.c>
+    php_value max_input_vars 20000
+    php_value max_multipart_body_parts 20000
+</IfModule>
+<IfModule mod_php7.c>
+    php_value max_input_vars 20000
+</IfModule>

@@ -51,7 +51,23 @@
             rules.hiddenModules.forEach(function (name) {
                 root.querySelectorAll('input[name="module[]"][value="' + name + '"]').forEach(function (box) {
                     box.checked = false;
-                    (box.closest('[class*="col-"], .form-check, label') || box).remove();
+                    // Remove only this choice: its own label/.form-check wrapper when it has one,
+                    // otherwise the checkbox, its text and the <br> after it.
+                    // Never remove a wrapper that holds other checkboxes (that removed whole forms).
+                    var wrap = box.closest('.form-check, label');
+                    if (wrap && wrap.querySelectorAll('input[type="checkbox"]').length === 1) {
+                        wrap.remove();
+                        return;
+                    }
+                    var node = box.nextSibling;
+                    while (node && !(node.nodeType === 1 && (node.tagName === 'INPUT' || node.tagName === 'DIV'))) {
+                        var next = node.nextSibling;
+                        var isBreak = node.nodeType === 1 && node.tagName === 'BR';
+                        node.parentNode.removeChild(node);
+                        node = next;
+                        if (isBreak) { break; }
+                    }
+                    box.remove();
                 });
             });
         }

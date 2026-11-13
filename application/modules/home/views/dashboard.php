@@ -115,6 +115,9 @@
 
 
   <link rel="icon" href="uploads/medicore_icon.png" type="image/png">
+  <!-- jQuery first: inline scripts in the page and footer plugins need it -->
+  <script src="adminlte/plugins/jquery/jquery.min.js"></script>
+  <script src="adminlte/plugins/jquery-ui/jquery-ui.min.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini <?php

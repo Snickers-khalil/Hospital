@@ -608,7 +608,7 @@ $('ul.nav-sidebar a').filter(function () {
 // for treeview
 $('ul.nav-treeview a').filter(function () {
   return this.href == url;
-}).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active'); u
+}).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
 
 
 
